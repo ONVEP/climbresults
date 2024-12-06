@@ -13,7 +13,6 @@
     @include('partials/nav')
     <main class="flex flex-col gap-2">
       <form method="post" class="flex gap-2 mb-2">
-        {{ csrfField() }}
         <input
           type="text"
           name="name"
@@ -47,7 +46,6 @@
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                 <form method="post" action="/categories/{{ category.id }}?_method=DELETE">
-                  {{ csrfField() }}
                   <button class="bg-red-800 text-white px-2 py-1 rounded">Supprimer</button>
                 </form>
               </td>

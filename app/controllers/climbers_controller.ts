@@ -2,6 +2,7 @@ import Category from '#models/category'
 import CategoryClimber from '#models/category_climber'
 import Climber from '#models/climber'
 import type { HttpContext } from '@adonisjs/core/http'
+import transmit from '@adonisjs/transmit/services/main'
 
 export default class ClimbersController {
   async index({ view }: HttpContext) {
@@ -45,6 +46,9 @@ export default class ClimbersController {
         results: 0,
       }
     )
+
+    transmit.broadcast('livegraphics', { message: 'reload' })
+    console.log('transmitted')
 
     return response.redirect().toPath('/climbers')
   }

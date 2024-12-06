@@ -12,6 +12,9 @@ const ClimbersController = () => import('#controllers/climbers_controller')
 const CategoriesController = () => import('#controllers/categories_controller')
 import Category from '#models/category'
 import router from '@adonisjs/core/services/router'
+import transmit from '@adonisjs/transmit/services/main'
+
+transmit.registerRoutes()
 
 router.get('/', [LiveController])
 router.get('/climbers', [ClimbersController, 'index'])
