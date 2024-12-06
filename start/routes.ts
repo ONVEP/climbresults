@@ -16,6 +16,11 @@ router.get('/', [LiveController])
 router.get('/climbers', [ClimbersController, 'index'])
 router.post('/climbers', [ClimbersController, 'create'])
 router.delete('/climbers/:id', [ClimbersController, 'delete'])
+router.patch('/climbers/:id/category', [ClimbersController, 'setCategory'])
 router.get('/categories', [CategoriesController, 'index'])
 router.post('/categories', [CategoriesController, 'create'])
 router.delete('/categories/:id', [CategoriesController, 'delete'])
+
+router.get('/live/results', ({ view }) => {
+  return view.render('pages/results')
+})

@@ -7,23 +7,74 @@
       MOF 2024
     </title>
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/css/app.css', 'resources/js/live.js'])
   </head>
   <body class="min-h-screen w-screen font-sans bg-gray-800 text-white">
     <div class="flex flex-row">
       <div class="grow">
         @include('partials/nav')
         <main class="flex flex-col gap-2 px-2">
+          <div>
+            <input
+              type="number"
+              id="currentClimber"
+              class="bg-gray-700 text-white px-2 py-1 rounded w-24"
+              value="1"
+            />
+          </div>
           @each(cat in categories)
             <div class="p-2 rounded border border-white">
-              <h2 class="text-xl font-bold">{{ cat.name }}</h2>
-              <ul class="flex flex-row gap-2">
-                @each(climber in cat.climbers)
-                  <li class="bg-gray-700 p-2 rounded">
-                    {{ climber.climber.firstName }} {{ climber.climber.lastName }}
-                  </li>
-                @end
-              </ul>
+              <h2 class="text-xl font-bold">
+                {{ cat.name }}
+              </h2>
+              <table class="min-w-full divide-y divide-gray-200 mt-4">
+                <thead class="bg-gray-700">
+                  <tr>
+                    <th
+                      scope="col"
+                      class="px-4 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider"
+                    >
+                      Order
+                    </th>
+                    <th
+                      scope="col"
+                      class="px-4 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider"
+                    >
+                      Last Name
+                    </th>
+                    <th
+                      scope="col"
+                      class="px-4 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider"
+                    >
+                      First Name
+                    </th>
+                    <th
+                      scope="col"
+                      class="px-4 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider"
+                    >
+                      Rank
+                    </th>
+                  </tr>
+                </thead>
+                <tbody class="bg-gray-800 divide-y divide-gray-700">
+                  @each(climber in cat.climbers)
+                    <tr data-order="{{ climber.order }}" data-climber-row>
+                      <td class="px-4 py-2 whitespace-nowrap text-sm text-white">
+                        {{ climber.order }}
+                      </td>
+                      <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-300">
+                        {{ climber.climber.lastName }}
+                      </td>
+                      <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-300">
+                        {{ climber.climber.firstName }}
+                      </td>
+                      <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-300">
+                        {{ climber.place }}
+                      </td>
+                    </tr>
+                  @end
+                </tbody>
+              </table>
             </div>
           @end
         </main>

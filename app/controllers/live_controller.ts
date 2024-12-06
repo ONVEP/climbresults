@@ -5,7 +5,7 @@ export default class LiveController {
   async handle({ view }: HttpContext) {
     const categories = await Category.query()
       .preload('climbers', (climbersQuery) => {
-        climbersQuery.preload('climber')
+        climbersQuery.preload('climber').orderBy('place', 'asc')
       })
       .exec()
 

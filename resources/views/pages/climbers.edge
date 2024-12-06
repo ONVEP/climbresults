@@ -24,25 +24,25 @@
           <tr>
             <th
               scope="col"
-              class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider"
+              class="px-4 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider"
             >
               Prénom
             </th>
             <th
               scope="col"
-              class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider"
+              class="px-4 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider"
             >
               Nom de famille
             </th>
             <th
               scope="col"
-              class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider"
+              class="px-4 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider"
             >
               Nationalité
             </th>
             <th
               scope="col"
-              class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider"
+              class="px-4 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider"
             >
               Actions
             </th>
@@ -51,19 +51,39 @@
         <tbody class="bg-gray-800 divide-y divide-gray-700">
           @each(climber in climbers)
             <tr>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-white">
+              <td class="px-4 py-2 whitespace-nowrap text-sm text-white">
                 {{ climber.firstName }}
               </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+              <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-300">
                 {{ climber.lastName }}
               </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+              <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-300">
                 {{ climber.nationality }}
               </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+              <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-300 flex flex-row gap-1">
                 <form method="post" action="/climbers/{{ climber.id }}?_method=DELETE">
                   {{ csrfField() }}
                   <button type="submit" class="bg-red-800 text-white px-2 py-1 rounded">Supprimer</button>
+                </form>
+                <form method="post" action="/climbers/{{ climber.id }}/category?_method=PATCH">
+                  {{ csrfField() }}
+                  <select name="category" class="bg-gray-700 text-white px-2 py-1 rounded">
+                    <option value="-1">
+                      Aucun
+                    </option>
+                    @each(category in categories)
+                      <option
+                        value="{{ category.id }}"
+                        @if(climber.categoryClimber && climber.categoryClimber.categoryId == category.id)
+                        selected
+                        @end
+                      >
+                        {{ category.name }}
+                      </option>
+                    @end
+                  </select>
+                  <input type="number" name="order" placeholder="Ordre" class="bg-gray-700 text-white px-2 py-1 rounded w-24" value="{{climber.categoryClimber?.order}}" />
+                  <button type="submit" class="bg-blue-800 text-white px-2 py-1 rounded">Enregistrer</button>
                 </form>
               </td>
             </tr>
