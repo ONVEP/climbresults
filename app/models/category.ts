@@ -1,4 +1,6 @@
-import { BaseModel, column } from '@adonisjs/lucid/orm'
+import CategoryClimber from '#models/category_climber'
+import { BaseModel, column, hasMany } from '@adonisjs/lucid/orm'
+import type { HasMany } from '@adonisjs/lucid/types/relations'
 import { DateTime } from 'luxon'
 
 export default class Category extends BaseModel {
@@ -13,4 +15,7 @@ export default class Category extends BaseModel {
 
   @column()
   declare name: string
+
+  @hasMany(() => CategoryClimber)
+  declare climbers: HasMany<typeof CategoryClimber>
 }
