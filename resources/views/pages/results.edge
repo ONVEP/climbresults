@@ -1,1 +1,31 @@
-@include('partials/climber_svg')
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>
+      MOF 2024
+    </title>
+
+    @vite(['resources/css/app.css', 'resources/js/live.js'])
+  </head>
+  <body class="min-h-screen w-screen font-sans">
+    <div class="flex flex-row justify-center items-center h-screen gap-12 pt-16">
+      @each(cat in categories)
+        <div class="flex flex-col gap-4">
+          @each((c, i)in cat.climbers)
+            <div>
+              @!component('partials/climber_svg', {
+              first_name: c.climber.firstName,
+              last_name: c.climber.lastName,
+              place: c.place,
+              results: c.results,
+              separator: i !== cat.climbers.length - 1
+              })
+            </div>
+          @end
+        </div>
+      @end
+    </div>
+  </body>
+</html>

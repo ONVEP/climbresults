@@ -1,17 +1,28 @@
 <svg
   xmlns="http://www.w3.org/2000/svg"
   xmlns:xlink="http://www.w3.org/1999/xlink"
-  width="393px"
-  height="47px"
+  width="444px"
+  height="77px"
 >
+  @if(separator)
+    <path
+      fill-rule="evenodd"
+      stroke="rgb(255, 255, 255)"
+      stroke-width="2px"
+      stroke-linecap="butt"
+      stroke-linejoin="miter"
+      fill="rgb(26, 16, 7)"
+      d="M1.057,72.641 L441.730,72.641 "
+    />
+  @end
   <path
     fill-rule="evenodd"
     stroke="rgb(255, 255, 255)"
     stroke-width="2px"
     stroke-linecap="butt"
     stroke-linejoin="miter"
-    fill="none"
-    d="M299.420,1.512 L313.214,1.512 L313.214,23.082 L299.420,23.082 L299.420,1.512 Z"
+    fill="{{ (results & (1 << 7)) == 1 ? 'rgb(246, 255, 0)': 'none' }}"
+    d="M326.172,12.275 L339.970,12.275 L339.970,33.835 L326.172,33.835 L326.172,12.275 Z"
   />
   <path
     fill-rule="evenodd"
@@ -19,8 +30,8 @@
     stroke-width="2px"
     stroke-linecap="butt"
     stroke-linejoin="miter"
-    fill="rgb(246, 255, 0)"
-    d="M299.420,21.356 L313.214,21.356 L313.214,42.927 L299.420,42.927 L299.420,21.356 Z"
+    fill="{{ (results & (1 << 6)) == 1 ? 'rgb(246, 255, 0)': 'none' }}"
+    d="M326.172,32.110 L339.970,32.110 L339.970,53.669 L326.172,53.669 L326.172,32.110 Z"
   />
   <path
     fill-rule="evenodd"
@@ -28,8 +39,8 @@
     stroke-width="2px"
     stroke-linecap="butt"
     stroke-linejoin="miter"
-    fill="none"
-    d="M325.283,1.512 L339.077,1.512 L339.077,23.082 L325.283,23.082 L325.283,1.512 Z"
+    fill="{{ (results & (1 << 5)) == 1 ? 'rgb(246, 255, 0)': 'none' }}"
+    d="M352.044,12.275 L365.842,12.275 L365.842,33.835 L352.044,33.835 L352.044,12.275 Z"
   />
   <path
     fill-rule="evenodd"
@@ -37,8 +48,8 @@
     stroke-width="2px"
     stroke-linecap="butt"
     stroke-linejoin="miter"
-    fill="none"
-    d="M325.283,21.356 L339.077,21.356 L339.077,42.927 L325.283,42.927 L325.283,21.356 Z"
+    fill="{{ (results & (1 << 4)) == 1 ? 'rgb(246, 255, 0)': 'none' }}"
+    d="M352.044,32.110 L365.842,32.110 L365.842,53.669 L352.044,53.669 L352.044,32.110 Z"
   />
   <path
     fill-rule="evenodd"
@@ -46,8 +57,8 @@
     stroke-width="2px"
     stroke-linecap="butt"
     stroke-linejoin="miter"
-    fill="none"
-    d="M351.147,1.512 L364.940,1.512 L364.940,23.082 L351.147,23.082 L351.147,1.512 Z"
+    fill="{{ (results & (1 << 3)) == 1 ? 'rgb(246, 255, 0)': 'none' }}"
+    d="M377.915,12.275 L391.713,12.275 L391.713,33.835 L377.915,33.835 L377.915,12.275 Z"
   />
   <path
     fill-rule="evenodd"
@@ -55,8 +66,8 @@
     stroke-width="2px"
     stroke-linecap="butt"
     stroke-linejoin="miter"
-    fill="none"
-    d="M351.147,21.356 L364.940,21.356 L364.940,42.927 L351.147,42.927 L351.147,21.356 Z"
+    fill="{{ (results & (1 << 2)) == 1 ? 'rgb(246, 255, 0)': 'none' }}"
+    d="M377.915,32.110 L391.713,32.110 L391.713,53.669 L377.915,53.669 L377.915,32.110 Z"
   />
   <path
     fill-rule="evenodd"
@@ -64,8 +75,8 @@
     stroke-width="2px"
     stroke-linecap="butt"
     stroke-linejoin="miter"
-    fill="none"
-    d="M377.010,1.512 L390.804,1.512 L390.804,23.082 L377.010,23.082 L377.010,1.512 Z"
+    fill="{{ (results & (1 << 1)) == 1 ? 'rgb(246, 255, 0)': 'none' }}"
+    d="M403.786,12.275 L417.584,12.275 L417.584,33.835 L403.786,33.835 L403.786,12.275 Z"
   />
   <path
     fill-rule="evenodd"
@@ -73,18 +84,36 @@
     stroke-width="2px"
     stroke-linecap="butt"
     stroke-linejoin="miter"
-    fill="none"
-    d="M377.010,21.356 L390.804,21.356 L390.804,42.927 L377.010,42.927 L377.010,21.356 Z"
+    fill="{{ (results & (1 << 0)) == 1 ? 'rgb(246, 255, 0)': 'none' }}"
+    d="M403.786,32.110 L417.584,32.110 L417.584,53.669 L403.786,53.669 L403.786,32.110 Z"
   />
   <text
     kerning="auto"
     font-family="Myriad Pro"
     fill="rgb(0, 0, 0)"
-    transform="matrix( 0.65937245575138, 0, 0, 0.6599007361905,0.13968262584081, 45.9203100186281)"
+    transform="matrix( 0.65957328800521, 0, 0, 0.65957328800521,27.616997300222, 54.3040790015848)"
     font-size="65.374px"
   >
     <tspan font-size="65.374px" font-family="UnifrakturCook" font-weight="bold" fill="#F6FF00">
-      &#54;
+      {{ place }}
+    </tspan>
+  </text>
+  <text
+    kerning="auto"
+    font-family="Myriad Pro"
+    fill="rgb(0, 0, 0)"
+    transform="matrix( 0.53386119019315, 0, 0, 0.53386119019315,77.5148112259706, 21.0353578617988)"
+    font-size="59.553px"
+  >
+    <tspan>
+      <tspan font-size="59.553px" font-family="Trajan Pro" fill="#FFFFFF">
+        {{ first_name.toLowerCase() }}
+      </tspan>
+    </tspan>
+    <tspan x="0" dy="1.2em">
+      <tspan font-size="59.553px" font-family="Trajan Pro 3" font-weight="bold" fill="#FFFFFF">
+        {{ last_name.toUpperCase() }}
+      </tspan>
     </tspan>
   </text>
 </svg>

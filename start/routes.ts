@@ -10,6 +10,7 @@
 const LiveController = () => import('#controllers/live_controller')
 const ClimbersController = () => import('#controllers/climbers_controller')
 const CategoriesController = () => import('#controllers/categories_controller')
+import Category from '#models/category'
 import router from '@adonisjs/core/services/router'
 
 router.get('/', [LiveController])
@@ -21,6 +22,14 @@ router.get('/categories', [CategoriesController, 'index'])
 router.post('/categories', [CategoriesController, 'create'])
 router.delete('/categories/:id', [CategoriesController, 'delete'])
 
-router.get('/live/results', ({ view }) => {
-  return view.render('pages/results')
+router.get('/live/results', async ({ view }) => {
+  const categories = await Category.query()
+    .orderBy('id', 'asc')
+    .limit(2)
+    .preload('climbers', (climbersQuery) => {
+      climbersQuery.preload('climber').orderBy('place', 'asc')
+    })
+    .exec()
+
+  return view.render('pages/results', { categories })
 })
