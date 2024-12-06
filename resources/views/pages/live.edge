@@ -13,8 +13,19 @@
     <div class="flex flex-row">
       <div class="grow">
         @include('partials/nav')
-        <main>
-
+        <main class="flex flex-col gap-2 px-2">
+          @each(cat in categories)
+            <div class="p-2 rounded border border-white">
+              <h2 class="text-xl font-bold">{{ cat.name }}</h2>
+              <ul class="flex flex-row gap-2">
+                @each(climber in cat.climbers)
+                  <li class="bg-gray-700 p-2 rounded">
+                    {{ climber.climber.firstName }} {{ climber.climber.lastName }}
+                  </li>
+                @end
+              </ul>
+            </div>
+          @end
         </main>
       </div>
       <iframe

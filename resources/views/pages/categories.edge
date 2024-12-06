@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>
+      MOF 2024
+    </title>
+
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+  </head>
+  <body class="min-h-screen w-screen font-sans bg-gray-800 text-white">
+    @include('partials/nav')
+    <main class="flex flex-col gap-2">
+      <form method="post" class="flex gap-2 mb-2">
+        {{ csrfField() }}
+        <input
+          type="text"
+          name="name"
+          placeholder="Nom de la catégorie"
+          class="text-gray-800 px-2 py-1 rounded"
+        />
+        <button class="bg-blue-600 text-white px-4 py-2 rounded">Ajouter</button>
+      </form>
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-700">
+          <tr>
+            <th
+              scope="col"
+              class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider"
+            >
+              Nom de la catégorie
+            </th>
+            <th
+              scope="col"
+              class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider"
+            >
+              Actions
+            </th>
+          </tr>
+        </thead>
+        <tbody class="bg-gray-800 divide-y divide-gray-700">
+          @each(category in categories)
+            <tr>
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-white">
+                {{ category.name }}
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                <form method="post" action="/categories/{{ category.id }}?_method=DELETE">
+                  {{ csrfField() }}
+                  <button class="bg-red-800 text-white px-2 py-1 rounded">Supprimer</button>
+                </form>
+              </td>
+            </tr>
+          @end
+        </tbody>
+      </table>
+    </main>
+  </body>
+</html>
