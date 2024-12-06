@@ -1,5 +1,7 @@
-import { BaseModel, column } from '@adonisjs/lucid/orm'
+import { BaseModel, column, hasOne } from '@adonisjs/lucid/orm'
+import type { HasOne } from '@adonisjs/lucid/types/relations'
 import { DateTime } from 'luxon'
+import CategoryClimber from './category_climber.js'
 
 export default class Climber extends BaseModel {
   @column({ isPrimary: true })
@@ -19,4 +21,7 @@ export default class Climber extends BaseModel {
 
   @column()
   declare nationality: string
+
+  @hasOne(() => CategoryClimber)
+  declare categoryClimber: HasOne<typeof CategoryClimber>
 }

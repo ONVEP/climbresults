@@ -25,4 +25,13 @@ export default class CategoryClimber extends BaseModel {
 
   @belongsTo(() => Climber)
   declare climber: BelongsTo<typeof Climber>
+
+  @column()
+  declare order: number
+
+  @column()
+  declare place: number
+
+  @column()
+  declare results: number
 }

@@ -10,8 +10,11 @@ export default class extends BaseSchema {
       table.timestamp('created_at')
       table.timestamp('updated_at')
 
-      table.integer('category_id').unsigned().references('category.id').onDelete('CASCADE')
-      table.integer('climber_id').unsigned().references('climber.id').onDelete('CASCADE')
+      table.integer('category_id').unsigned().references('categories.id').onDelete('CASCADE')
+      table.integer('climber_id').unsigned().references('climbers.id').onDelete('CASCADE')
+      table.integer('order')
+      table.integer('place')
+      table.integer('results')
     })
   }
 
