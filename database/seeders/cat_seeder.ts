@@ -4,11 +4,11 @@ import { BaseSeeder } from '@adonisjs/lucid/seeders'
 
 export default class extends BaseSeeder {
   async run() {
-    const men = await Category.create({
-      name: 'Hommes',
-    })
     const women = await Category.create({
       name: 'Femmes',
+    })
+    const men = await Category.create({
+      name: 'Hommes',
     })
 
     const menClimbers = await ClimberFactory.createMany(6)
