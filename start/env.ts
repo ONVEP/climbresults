@@ -19,6 +19,7 @@ export default await Env.create(new URL('../', import.meta.url), {
   LOG_LEVEL: Env.schema.string(),
 
   ROUTES_COUNT: Env.schema.number(),
+  TIMER: Env.schema.number(),
 
   /*
   |----------------------------------------------------------
