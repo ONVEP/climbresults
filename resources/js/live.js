@@ -1,15 +1,22 @@
+function setCurrentClimber(climber) {
+  document.querySelectorAll('tr[data-climber-row]').forEach((row) => {
+    row.classList.remove('bg-orange-400/20')
+  })
+  document.querySelectorAll(`tr[data-order="${climber}"]`).forEach((row) => {
+    row.classList.add('bg-orange-400/20')
+  })
+}
+
 document.addEventListener('DOMContentLoaded', () => {
-  console.log(2)
+  const savedClimber = localStorage.getItem('currentClimber') || '1'
+  setCurrentClimber(savedClimber)
+
   const currentClimber = document.getElementById('currentClimber')
-  console.log(currentClimber)
+  currentClimber.value = savedClimber
   currentClimber.addEventListener('input', (event) => {
     console.log(event.target.value)
-    document.querySelectorAll('tr[data-climber-row]').forEach((row) => {
-      row.classList.remove('bg-orange-500/10')
-    })
-    document.querySelectorAll(`tr[data-order="${event.target.value}"]`).forEach((row) => {
-      row.classList.add('bg-orange-500/10')
-    })
+    setCurrentClimber(event.target.value)
+    localStorage.setItem('currentClimber', event.target.value)
   })
 
   const startTimer = document.getElementById('start-timer')
