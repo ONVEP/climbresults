@@ -37,12 +37,10 @@ export class Timer {
 
   get time() {
     if (this.startTimestamp === null) return env.get('TIMER')
-    const ellapsed =
-      Math.round(
-        ((this.pausedTimestamp === null ? Date.now() : this.pausedTimestamp) -
-          this.startTimestamp) /
-          1000
-      ) % env.get('TIMER')
+    const ellapsed = Math.round(
+      ((this.pausedTimestamp === null ? Date.now() : this.pausedTimestamp) - this.startTimestamp) /
+        1000
+    )
     return env.get('TIMER') - ellapsed
   }
 
@@ -55,7 +53,9 @@ export class Timer {
         1000 - ((Date.now() - this.startTimestamp) % 1000)
       )
       const remainingMs = 1000 - ((Date.now() - this.startTimestamp) % 1000)
-      this.refreshTimeout = setTimeout(() => this.updateTime(), remainingMs)
+      if (this.time > 0) {
+        this.refreshTimeout = setTimeout(() => this.updateTime(), remainingMs)
+      }
     }
   }
 }
