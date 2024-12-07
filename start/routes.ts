@@ -11,6 +11,7 @@ const LiveController = () => import('#controllers/live_controller')
 const ClimbersController = () => import('#controllers/climbers_controller')
 const CategoriesController = () => import('#controllers/categories_controller')
 const TimerController = () => import('#controllers/timer_controller')
+const CategoryClimbersController = () => import('#controllers/category_climbers_controller')
 import Category from '#models/category'
 import router from '@adonisjs/core/services/router'
 import transmit from '@adonisjs/transmit/services/main'
@@ -25,6 +26,8 @@ router.patch('/climbers/:id/category', [ClimbersController, 'setCategory'])
 router.get('/categories', [CategoriesController, 'index'])
 router.post('/categories', [CategoriesController, 'create'])
 router.delete('/categories/:id', [CategoriesController, 'delete'])
+
+router.patch('/catclimbers/:id/place', [CategoryClimbersController, 'setPlace'])
 
 router.post('/timer/start', [TimerController, 'start'])
 router.post('/timer/pause', [TimerController, 'pause'])

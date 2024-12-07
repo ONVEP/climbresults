@@ -71,6 +71,30 @@
                       </td>
                       <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-300">
                         {{ climber.place }}
+                        <form action="/catclimbers/{{ climber.id }}/place?_method=PATCH" method="POST" class="inline">
+                          <button type="submit" name="direction" value="up" class="bg-gray-600 text-white px-2 py-1 rounded">                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke-width="1.5"
+                              stroke="currentColor"
+                              class="size-4"
+                            >
+                              <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5" />
+                            </svg>
+                          </button>
+                          <button type="submit" name="direction" value="down" class="bg-gray-600 text-white px-2 py-1 rounded">                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke-width="1.5"
+                              stroke="currentColor"
+                              class="size-4"
+                            >
+                              <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                            </svg>
+                          </button>
+                        </form>
                       </td>
                     </tr>
                   @end
