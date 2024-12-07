@@ -28,6 +28,7 @@ router.post('/categories', [CategoriesController, 'create'])
 router.delete('/categories/:id', [CategoriesController, 'delete'])
 
 router.patch('/catclimbers/:id/place', [CategoryClimbersController, 'setPlace'])
+router.patch('/catclimbers/:id/results', [CategoryClimbersController, 'results'])
 
 router.post('/timer/start', [TimerController, 'start'])
 router.post('/timer/pause', [TimerController, 'pause'])

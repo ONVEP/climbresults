@@ -49,6 +49,14 @@
                     >
                       First Name
                     </th>
+                    @each(i in routes)
+                      <th
+                        scope="col"
+                        class="px-4 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider"
+                      >
+                        {{ i+1 }}
+                      </th>
+                    @end
                     <th
                       scope="col"
                       class="px-4 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider"
@@ -69,6 +77,30 @@
                       <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-300">
                         {{ climber.climber.firstName }}
                       </td>
+                      @each(route in routes)
+                        <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-300">
+                            <form action="/catclimbers/{{ climber.id }}/results?_method=PATCH" method="POST" class="flex flex-row items-center text-black">
+                              <button
+                                type="submit"
+                                name="results"
+                                value="{{ ((climber.results & ~ (3 << (route * 2)))) | 0 << (route * 2) }}"
+                                class="{{ ((climber.results >> (route*2))&3) == 0 ? 'bg-yellow-800 h-6 w-6' : 'bg-yellow-100 h-4 w-4' }}"
+                              ></button>
+                              <button
+                                type="submit"
+                                name="results"
+                                value="{{ ((climber.results & ~ (3 << (route * 2)))) | 2 << (route * 2) }}"
+                                class="{{ ((climber.results >> (route*2))&3) == 2 ? 'bg-sky-800 h-6 w-6' : 'bg-sky-100 h-4 w-4' }}"
+                              >{{ ((climber.results & ~ (3 << (route * 2)))) | 2 << (route * 2) }}</button>
+                              <button
+                                type="submit"
+                                name="results"
+                                value="{{ ((climber.results & ~ (3 << (route * 2)))) | 3 << (route * 2) }}"
+                                class="{{ ((climber.results >> (route*2))&3) == 3 ? 'bg-red-800 h-6 w-6' : 'bg-red-100 h-4 w-4' }}"
+                              >{{ ((climber.results & ~ (3 << (route * 2)))) | 3 << (route * 2) }}</button>
+                            </form>
+                        </td>
+                      @end
                       <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-300">
                         {{ climber.place }}
                         <form action="/catclimbers/{{ climber.id }}/place?_method=PATCH" method="POST" class="inline">

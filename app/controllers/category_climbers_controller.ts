@@ -1,5 +1,6 @@
 import CategoryClimber from '#models/category_climber'
 import type { HttpContext } from '@adonisjs/core/http'
+import transmit from '@adonisjs/transmit/services/main'
 
 export default class CategoryClimbersController {
   async setPlace({ params, request, response }: HttpContext) {
@@ -26,6 +27,21 @@ export default class CategoryClimbersController {
     }
 
     await climber.save()
+
+    transmit.broadcast('livegraphics', { message: 'reload' })
+
+    return response.redirect().toPath('/')
+  }
+
+  async results({ params, request, response }: HttpContext) {
+    const { id } = params
+    const { results } = request.body()
+
+    const climber = await CategoryClimber.findOrFail(id)
+    climber.results = results
+    await climber.save()
+
+    transmit.broadcast('livegraphics', { message: 'reload' })
 
     return response.redirect().toPath('/')
   }

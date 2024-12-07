@@ -1,4 +1,5 @@
 import Category from '#models/category'
+import env from '#start/env'
 import type { HttpContext } from '@adonisjs/core/http'
 
 export default class LiveController {
@@ -9,6 +10,9 @@ export default class LiveController {
       })
       .exec()
 
-    return view.render('pages/live', { categories })
+    return view.render('pages/live', {
+      categories,
+      routes: Array.from(Array(env.get('ROUTES_COUNT')).keys()),
+    })
   }
 }
