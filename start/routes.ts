@@ -42,3 +42,6 @@ router.get('/live/results', async ({ view }) => {
 
   return view.render('pages/results', { categories })
 })
+router.get('/live/timer', async ({ view }) => {
+  return view.render('pages/timer')
+})
