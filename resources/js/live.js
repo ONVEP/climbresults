@@ -7,18 +7,7 @@ function setCurrentClimber(climber) {
   })
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  const savedClimber = localStorage.getItem('currentClimber') || '1'
-  setCurrentClimber(savedClimber)
-
-  const currentClimber = document.getElementById('currentClimber')
-  currentClimber.value = savedClimber
-  currentClimber.addEventListener('input', (event) => {
-    console.log(event.target.value)
-    setCurrentClimber(event.target.value)
-    localStorage.setItem('currentClimber', event.target.value)
-  })
-
+function loadTimer() {
   const startTimer = document.getElementById('start-timer')
   const pauseTimer = document.getElementById('pause-timer')
   const resetTimer = document.getElementById('reset-timer')
@@ -84,6 +73,32 @@ document.addEventListener('DOMContentLoaded', () => {
       body: JSON.stringify({ seconds: -0.1 }),
     })
   })
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const savedClimber = localStorage.getItem('currentClimber') || '1'
+  setCurrentClimber(savedClimber)
+
+  const currentClimber = document.getElementById('currentClimber')
+  currentClimber.value = savedClimber
+  currentClimber.addEventListener('input', (event) => {
+    console.log(event.target.value)
+    setCurrentClimber(event.target.value)
+    localStorage.setItem('currentClimber', event.target.value)
+  })
+
+  loadTimer()
+
+  const categoryDetails = document.querySelectorAll('details[data-category]')
+  for (const detail of categoryDetails) {
+    const category = detail.getAttribute('data-category')
+    if (localStorage.getItem(`category-${category}-expanded`) === 'true')
+      detail.setAttribute('open', '')
+    detail.addEventListener('toggle', () => {
+      const expanded = detail.hasAttribute('open')
+      localStorage.setItem(`category-${category}-expanded`, expanded)
+    })
+  }
 })
 
 import { Transmit } from '@adonisjs/transmit-client'
@@ -103,4 +118,4 @@ subscription.onMessage((data) => {
   document.getElementById('timer').innerText = timeToString(data)
 })
 
-console.log(1)
+console.log('Live page')

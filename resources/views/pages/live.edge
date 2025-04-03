@@ -24,10 +24,10 @@
             @include('partials/timer_controls')
           </div>
           @each(cat in categories)
-            <div class="p-2 rounded border border-white">
-              <h2 class="text-xl font-bold">
+            <details class="p-2 rounded border border-white" data-category="{{ cat.id }}">
+              <summary class="text-xl font-bold">
                 {{ cat.name }}
-              </h2>
+              </summary>
               <table class="min-w-full divide-y divide-gray-200 mt-4">
                 <thead class="bg-gray-700">
                   <tr>
@@ -132,7 +132,7 @@
                   @end
                 </tbody>
               </table>
-            </div>
+            </details>
           @end
         </main>
       </div>
