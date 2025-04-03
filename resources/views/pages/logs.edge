@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>
+      MOF 2024
+    </title>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        //scroll main to bottom
+        const main = document.querySelector("main");
+        main.scrollTop = main.scrollHeight;
+      });
+    </script>
+    @vite(['resources/css/app.css'])
+  </head>
+  <body class="h-screen w-screen font-sans bg-gray-800 text-white ">
+    <div class="flex flex-col h-full">
+      @include('partials/nav')
+      <main class="grow flex flex-col px-2 text-nowrap overflow-auto w-screen h-fit font-mono">
+        @each(log in logs)
+          <details class="{{ log.level >= 50 ? 'text-red-500' :
+             log.level>=30?'text-sky-500': '' }}">
+            <summary>
+              <span>[{{ log.time }}]</span>
+              {{ log.msg }}
+            </summary>
+            {{ JSON.stringify(log) }}
+          </details>
+        @end
+      </main>
+    </div>
+  </body>
+</html>
