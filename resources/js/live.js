@@ -115,7 +115,7 @@ const subscription = transmit.subscription('timer')
 await subscription.create()
 
 subscription.onMessage((data) => {
-  document.getElementById('timer').innerText = timeToString(data)
+  document.getElementById('timer').innerText = timeToString(data.time)
 })
 
 console.log('Live page')

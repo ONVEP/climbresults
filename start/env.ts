@@ -19,7 +19,9 @@ export default await Env.create(new URL('../', import.meta.url), {
   LOG_LEVEL: Env.schema.string(),
 
   ROUTES_COUNT: Env.schema.number(),
-  TIMER: Env.schema.number(),
+  TIMER_DURATION: Env.schema.number(),
+  TIMER_PAUSE_DURATION: Env.schema.number.optional(),
+  TIMER_LOOP: Env.schema.boolean.optional(),
 
   /*
   |----------------------------------------------------------
