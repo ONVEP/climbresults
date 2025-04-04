@@ -52,25 +52,6 @@ router.get('/live/timer', async ({ view }) => {
   return view.render('pages/timer')
 })
 
-router.get('/logs', async ({ view, logger }) => {
-  const logFile = await readFile('tmp/logs/app.log', 'utf-8').catch((err) => {
-    logger.error({ err }, 'Error while reading log file')
-    return ''
-  })
-  const logLines = logFile
-    .split('\n')
-    .map((l) => {
-      try {
-        const line = JSON.parse(l)
-        return {
-          ...line,
-          time: DateTime.fromMillis(line.time).toFormat('HH:mm:ss.SSS'),
-        }
-      } catch {
-        return null
-      }
-    })
-    .filter((l) => l !== null)
-
-  return view.render('pages/logs', { logs: logLines })
-})
+router.get('/logs', [LogsController, 'index'])
+router.post('/logs/clear', [LogsController, 'clear'])
+router.get('/logs/content', [LogsController, 'content'])

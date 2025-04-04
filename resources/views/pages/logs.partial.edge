@@ -1,0 +1,18 @@
+@each(log in logs)
+  <details
+    class="{{ log.level >= 50 ? 'text-red-500' :
+            log.level >= 40 ? 'text-yellow-500' :
+             log.level>=30?'text-sky-500': '' }}"
+  >
+    <summary>
+      <span>[{{ log.time }}]</span>
+      {{ log.msg }}
+    </summary>
+    <div class="ml-8">
+      {{ JSON.stringify(log) }}
+      @each(line in (log.err?.messages??[]))
+        <br />[{{line.field}}, {{line.rule}}] {{ line.message }}
+      @end
+    </div>
+  </details>
+@end
