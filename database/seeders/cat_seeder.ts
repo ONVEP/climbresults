@@ -15,20 +15,18 @@ export default class extends BaseSeeder {
     const womenClimbers = await ClimberFactory.createMany(6)
 
     for (let i in menClimbers) {
-      await menClimbers[i].related('categoryClimber').create({
+      await menClimbers[i].related('categoryClimbers').create({
         categoryId: men.id,
         order: Number.parseInt(i) + 1,
         place: Number.parseInt(i) + 1,
-        results: 0,
       })
     }
 
     for (let i in womenClimbers) {
-      await womenClimbers[i].related('categoryClimber').create({
+      await womenClimbers[i].related('categoryClimbers').create({
         categoryId: women.id,
         order: Number.parseInt(i) + 1,
         place: Number.parseInt(i) + 1,
-        results: 0,
       })
     }
   }
