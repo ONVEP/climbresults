@@ -26,7 +26,12 @@
               <span>[{{ log.time }}]</span>
               {{ log.msg }}
             </summary>
-            {{ JSON.stringify(log) }}
+            <div class="ml-8">
+              {{ JSON.stringify(log) }}
+              @each(line in (log.err?.messages??[]))
+                [{{line.field}}, {{line.rule}}] {{ line.message }}<br />
+              @end
+            </div>
           </details>
         @end
       </main>
