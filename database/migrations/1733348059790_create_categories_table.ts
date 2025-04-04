@@ -11,6 +11,7 @@ export default class extends BaseSchema {
       table.timestamp('updated_at')
 
       table.string('name')
+      table.integer('ifsc_category_round_id').unsigned().nullable()
     })
   }
 

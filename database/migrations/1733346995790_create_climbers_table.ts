@@ -13,6 +13,10 @@ export default class extends BaseSchema {
       table.string('first_name')
       table.string('last_name')
       table.string('nationality')
+      table.string('flag_url').nullable()
+      table.string('tag').nullable()
+
+      table.integer('ifsc_id').unsigned().nullable().unique()
     })
   }
 

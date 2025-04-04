@@ -1,8 +1,9 @@
 import Category from '#models/category'
 import Climber from '#models/climber'
-import { BaseModel, belongsTo, column } from '@adonisjs/lucid/orm'
-import type { BelongsTo } from '@adonisjs/lucid/types/relations'
+import { BaseModel, belongsTo, column, hasMany } from '@adonisjs/lucid/orm'
+import type { BelongsTo, HasMany } from '@adonisjs/lucid/types/relations'
 import { DateTime } from 'luxon'
+import ClimberRouteResult from './climber_route_result.js'
 
 export default class CategoryClimber extends BaseModel {
   @column({ isPrimary: true })
@@ -32,6 +33,6 @@ export default class CategoryClimber extends BaseModel {
   @column()
   declare place: number
 
-  @column()
-  declare results: number
+  @hasMany(() => ClimberRouteResult)
+  declare results: HasMany<typeof ClimberRouteResult>
 }

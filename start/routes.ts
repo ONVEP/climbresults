@@ -12,11 +12,10 @@ const ClimbersController = () => import('#controllers/climbers_controller')
 const CategoriesController = () => import('#controllers/categories_controller')
 const TimerController = () => import('#controllers/timer_controller')
 const CategoryClimbersController = () => import('#controllers/category_climbers_controller')
+const LogsController = () => import('#controllers/logs_controller')
 import Category from '#models/category'
 import router from '@adonisjs/core/services/router'
 import transmit from '@adonisjs/transmit/services/main'
-import { DateTime } from 'luxon'
-import { readFile } from 'node:fs/promises'
 
 transmit.registerRoutes()
 
@@ -28,9 +27,13 @@ router.patch('/climbers/:id/category', [ClimbersController, 'setCategory'])
 router.get('/categories', [CategoriesController, 'index'])
 router.post('/categories', [CategoriesController, 'create'])
 router.delete('/categories/:id', [CategoriesController, 'delete'])
+router.post('/categories/:id/poll', [CategoriesController, 'poll'])
+router.post('/categories/:id/auto_poll_start', [CategoriesController, 'startAutoPoll'])
+router.post('/categories/:id/auto_poll_stop', [CategoriesController, 'stopAutoPoll'])
 
 router.patch('/catclimbers/:id/place', [CategoryClimbersController, 'setPlace'])
-router.patch('/catclimbers/:id/results', [CategoryClimbersController, 'results'])
+router.patch('/catclimbers/:id/results/:route', [CategoryClimbersController, 'results'])
+router.delete('/catclimbers/:id', [CategoryClimbersController, 'delete'])
 
 router.post('/timer/start', [TimerController, 'start'])
 router.post('/timer/pause', [TimerController, 'pause'])

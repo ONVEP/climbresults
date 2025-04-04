@@ -23,6 +23,8 @@ export default await Env.create(new URL('../', import.meta.url), {
   TIMER_PAUSE_DURATION: Env.schema.number.optional(),
   TIMER_LOOP: Env.schema.boolean.optional(),
 
+  POLLING_INTERVAL: Env.schema.number.optional(),
+
   /*
   |----------------------------------------------------------
   | Variables for configuring session package

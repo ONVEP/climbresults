@@ -1,7 +1,7 @@
 import { BaseSchema } from '@adonisjs/lucid/schema'
 
 export default class extends BaseSchema {
-  protected tableName = 'category_climbers'
+  protected tableName = 'climber_route_results'
 
   async up() {
     this.schema.createTable(this.tableName, (table) => {
@@ -10,22 +10,19 @@ export default class extends BaseSchema {
       table.timestamp('created_at')
       table.timestamp('updated_at')
 
+      table.string('route').notNullable()
+      table.integer('order').notNullable()
+      table.boolean('zone').nullable()
+      table.integer('zone_tries').nullable()
+      table.boolean('top').nullable()
+      table.integer('top_tries').nullable()
       table
-        .integer('category_id')
+        .integer('category_climber_id')
         .unsigned()
         .notNullable()
-        .references('categories.id')
+        .references('id')
+        .inTable('category_climbers')
         .onDelete('CASCADE')
-      table
-        .integer('climber_id')
-        .unsigned()
-        .notNullable()
-        .references('climbers.id')
-        .onDelete('CASCADE')
-      table.integer('order')
-      table.string('route')
-      table.integer('place')
-      table.integer('results')
     })
   }
 

@@ -6,7 +6,9 @@ import transmit from '@adonisjs/transmit/services/main'
 
 export default class ClimbersController {
   async index({ view }: HttpContext) {
-    const climbers = await Climber.query().preload('categoryClimber').exec()
+    const climbers = await Climber.query()
+      .preload('categoryClimbers', (q) => q.preload('category'))
+      .exec()
     const categories = await Category.all()
 
     return view.render('pages/climbers', { climbers, categories })
@@ -35,6 +37,7 @@ export default class ClimbersController {
 
     await Climber.findOrFail(id)
     const dbCategory = await Category.find(category)
+    if (!dbCategory) return response.redirect().toPath('/climbers')
 
     await CategoryClimber.updateOrCreate(
       { climberId: id },
@@ -43,7 +46,6 @@ export default class ClimbersController {
         categoryId: dbCategory ? category : null,
         order: order,
         place: 0,
-        results: 0,
       }
     )
 
