@@ -7,11 +7,14 @@ const transmit = new Transmit({
   },
 })
 
-const subscription = transmit.subscription('livegraphics')
-await subscription.create()
+const main = async () => {
+  const subscription = transmit.subscription('livegraphics')
+  await subscription.create()
 
-subscription.onMessage((data) => {
-  if (data.message == 'reload') {
-    location.reload()
-  }
-})
+  subscription.onMessage((data) => {
+    if (data.message == 'reload') {
+      location.reload()
+    }
+  })
+}
+main()

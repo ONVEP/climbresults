@@ -104,18 +104,21 @@ document.addEventListener('DOMContentLoaded', () => {
 import { Transmit } from '@adonisjs/transmit-client'
 import { timeToString } from './lib'
 
-const transmit = new Transmit({
-  baseUrl: window.location.origin,
-  uidGenerator: () => {
-    return Date.now().toString() + Math.floor(Math.random() * 1000000)
-  },
-})
+const main = async () => {
+  const transmit = new Transmit({
+    baseUrl: window.location.origin,
+    uidGenerator: () => {
+      return Date.now().toString() + Math.floor(Math.random() * 1000000)
+    },
+  })
 
-const subscription = transmit.subscription('timer')
-await subscription.create()
+  const subscription = transmit.subscription('timer')
+  await subscription.create()
 
-subscription.onMessage((data) => {
-  document.getElementById('timer').innerText = timeToString(data.time)
-})
+  subscription.onMessage((data) => {
+    document.getElementById('timer').innerText = timeToString(data.time)
+  })
+}
+main()
 
 console.log('Live page')
