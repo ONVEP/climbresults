@@ -46,7 +46,12 @@ export default class IFSC {
   constructor(private category: Category) {}
 
   async pollResults(): Promise<PollingStatus> {
-    const data = await getIfscCategoryRoundResults(this.category.ifscCategoryRoundId)
+    let data
+    try {
+      data = await getIfscCategoryRoundResults(this.category.ifscCategoryRoundId)
+    } catch {
+      return { result: 'error', message: 'Fetch error' }
+    }
     if (!data.startlist) {
       logger.warn(`Startlist is not available for category ${this.category.ifscCategoryRoundId}`)
       return { result: 'warning', message: 'No startlist' }

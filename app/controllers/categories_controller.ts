@@ -45,8 +45,13 @@ export default class CategoriesController {
 
     const category = await Category.find(id)
     if (category) {
-      const status = await category.scrapIFSC()
-      scrapperProvider.setPollingStatus(category.id, status)
+      try {
+        const status = await category.scrapIFSC()
+        scrapperProvider.setPollingStatus(category.id, status)
+      } catch (err) {
+        logger.error({ err }, 'Error while polling category')
+        scrapperProvider.setPollingStatus(category.id, { result: 'error', message: 'ERR_UNKWN_10' })
+      }
     }
     return response.redirect().toPath('/categories')
   }
