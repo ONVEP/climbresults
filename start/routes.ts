@@ -13,6 +13,7 @@ const CategoriesController = () => import('#controllers/categories_controller')
 const TimerController = () => import('#controllers/timer_controller')
 const CategoryClimbersController = () => import('#controllers/category_climbers_controller')
 const LogsController = () => import('#controllers/logs_controller')
+const ApiController = () => import('#controllers/api_controller')
 import Category from '#models/category'
 import router from '@adonisjs/core/services/router'
 import transmit from '@adonisjs/transmit/services/main'
@@ -58,3 +59,7 @@ router.get('/live/timer', async ({ view }) => {
 router.get('/logs', [LogsController, 'index'])
 router.post('/logs/clear', [LogsController, 'clear'])
 router.get('/logs/content', [LogsController, 'content'])
+
+router.get('/api/current-category', [ApiController, 'getCurrentCategory'])
+router.post('/api/current-category', [ApiController, 'setCurrentCategory'])
+router.get('/api/group/:group', [ApiController, 'clibmersByGroup'])

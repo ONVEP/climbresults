@@ -99,6 +99,17 @@ document.addEventListener('DOMContentLoaded', () => {
       localStorage.setItem(`category-${category}-expanded`, expanded)
     })
   }
+
+  const currentCategory = document.getElementById('current-category')
+  currentCategory.addEventListener('change', (event) => {
+    fetch('/api/current-category', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ category: event.target.value }),
+    })
+  })
 })
 
 import { Transmit } from '@adonisjs/transmit-client'

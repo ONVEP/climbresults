@@ -1,4 +1,5 @@
 import Category from '#models/category'
+import { LiveStatus } from '#providers/live_provider'
 import { timer } from '#providers/timer'
 import type { HttpContext } from '@adonisjs/core/http'
 
@@ -32,6 +33,7 @@ export default class LiveController {
     return view.render('pages/live', {
       categories: data,
       timer: timeToString(timer.time),
+      currentCategory: LiveStatus.currentCategory,
     })
   }
 }

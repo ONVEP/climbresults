@@ -15,6 +15,16 @@
         @include('partials/nav')
         <main class="flex flex-col gap-2 px-2">
           <div class="flex flex-row items-center gap-2">
+            <select id="current-category" class="bg-gray-700 text-white px-2 py-1 rounded w-48">
+              <option value="" disabled {{ currentCategory == null || currentCategory == undefined ? 'selected' : '' }}>
+                Catégorie
+              </option>
+              @each(cat in categories)
+                <option value="{{ cat.category.id }}" {{ cat.category.id == currentCategory ? 'selected' : '' }}>
+                  {{ cat.category.name }}
+                </option>
+              @end
+            </select>
             <input
               type="number"
               id="currentClimber"
