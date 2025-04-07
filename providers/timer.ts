@@ -38,6 +38,7 @@ export class Timer {
   addSeconds(s: number) {
     if (this.startTimestamp === null) return
     this.startTimestamp += Math.round(s * 1000)
+    transmit.broadcast('timer', { time: this.time })
   }
 
   get time() {
