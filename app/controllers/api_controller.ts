@@ -5,7 +5,10 @@ import db from '@adonisjs/lucid/services/db'
 export default class ApiController {
   async clibmersByGroup({ request, response, logger }: HttpContext) {
     const group = Number(request.param('group'))
-    logger.debug({ raw: request.param('group'), group })
+    logger.debug(
+      { raw: request.param('group'), group },
+      `Request group ${group} (${request.param('group')})`
+    )
     if (group === undefined || group === null || Number.isNaN(group)) {
       return response.status(400).json({ error: 'Group is required' })
     }

@@ -9,5 +9,5 @@ emitter.on('http:request_completed', (event) => {
   const responseCode = event.ctx.response.getStatus()
   const body = JSON.stringify(event.ctx.request.all())
 
-  logger.info(`[${responseCode}] ${method} ${url}: ${string.prettyHrTime(duration)} | ${body}`)
+  logger.debug(`[${responseCode}] ${method} ${url}: ${string.prettyHrTime(duration)} | ${body}`)
 })
