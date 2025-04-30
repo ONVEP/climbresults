@@ -26,6 +26,7 @@ export default class extends BaseSchema {
       table.string('route')
       table.integer('place')
       table.integer('results')
+      table.string('score')
     })
   }
 

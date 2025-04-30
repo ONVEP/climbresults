@@ -33,6 +33,9 @@ export default class CategoryClimber extends BaseModel {
   @column()
   declare place: number
 
+  @column()
+  declare score: string | null
+
   @hasMany(() => ClimberRouteResult)
   declare results: HasMany<typeof ClimberRouteResult>
 }

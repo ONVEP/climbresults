@@ -81,6 +81,7 @@ export default class IFSC {
         {
           order: ranking?.start_order ?? Number.parseInt(idx) + 1,
           place: ranking?.rank ?? Number.parseInt(idx) + 1,
+          score: ranking?.score ?? null,
         }
       )
 
