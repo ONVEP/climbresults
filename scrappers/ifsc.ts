@@ -64,12 +64,12 @@ export default class IFSC {
         })
       }
       const climber = this.climberCache[climberData.athlete_id]
-      climber.ifscId = climberData.athlete_id
-      climber.firstName = climberData.firstname
-      climber.lastName = climberData.lastname
-      climber.nationality = climberData.country
-      climber.flagUrl = climberData.flag_url
-      climber.tag = climberData.bib.padStart(3, '0')
+      if (!climber.ifscId) climber.ifscId = climberData.athlete_id
+      if (!climber.firstName) climber.firstName = climberData.firstname
+      if (!climber.lastName) climber.lastName = climberData.lastname
+      if (!climber.nationality) climber.nationality = climberData.country
+      if (!climber.flagUrl) climber.flagUrl = climberData.flag_url
+      if (!climber.tag) climber.tag = climberData.bib.padStart(3, '0')
       climber.save()
 
       const ranking = data.ranking?.find((c) => c.athlete_id === climberData.athlete_id)
