@@ -44,6 +44,7 @@ const nextPage = (results: CGLayers['RANKING']['data'], page = 0) => {
   const rows: (ClimberRow | null)[] = results?.results.slice(page * 10, (page + 1) * 10) ?? []
   while (rows.length < 10) rows.push(null)
   rows?.forEach((result, idx) => updateRow(result, idx))
+  if(timeout) clearTimeout(timeout)
   timeout = setTimeout(
     nextPage,
     10000,
