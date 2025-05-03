@@ -1,5 +1,7 @@
 import env from '#start/env'
 import transmit from '@adonisjs/transmit/services/main'
+import { timeToString } from '../app/utils/conversion.js'
+import { CGStatus } from './cg_provider.js'
 
 const TIMER_DURATION = env.get('TIMER_DURATION', 0)
 const TIMER_PAUSE_DURATION = env.get('TIMER_PAUSE_DURATION', 0)
@@ -38,7 +40,9 @@ export class Timer {
   addSeconds(s: number) {
     if (this.startTimestamp === null) return
     this.startTimestamp += Math.round(s * 1000)
-    transmit.broadcast('timer', { time: this.time })
+    transmit.broadcast('timer2', { time: timeToString(this.time) })
+    const time = timeToString(this.time)
+    CGStatus.updateLayer('TIMER', { t1: time[0], t2: time[2], t3: time[3] })
   }
 
   get time() {
@@ -56,7 +60,9 @@ export class Timer {
   }
 
   private updateTime() {
-    transmit.broadcast('timer', { time: this.time })
+    transmit.broadcast('timer2', { time: timeToString(this.time) })
+    const time = timeToString(this.time)
+    CGStatus.updateLayer('TIMER', { t1: time[0], t2: time[2], t3: time[3] })
     if (this.startTimestamp !== null && this.pausedTimestamp === null) {
       console.log(
         Date.now(),

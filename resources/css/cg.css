@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-transparent;
+}
+
+@layer base {
+  .text-vertical {
+    writing-mode: vertical-rl;
+    rotate: 180deg;
+  }
+
+  [data-cglayer] {
+    @apply data-[cg-shown]:opacity-100 opacity-0 transition;
+  }
+}

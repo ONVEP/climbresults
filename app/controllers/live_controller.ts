@@ -2,12 +2,7 @@ import Category from '#models/category'
 import { LiveStatus } from '#providers/live_provider'
 import { timer } from '#providers/timer'
 import type { HttpContext } from '@adonisjs/core/http'
-
-export function timeToString(time: number) {
-  const minutes = Math.floor(time / 60)
-  const seconds = time % 60
-  return `${minutes.toString().padStart(1, '0')}:${seconds.toString().padStart(2, '0')}`
-}
+import { timeToString } from '../utils/conversion.js'
 
 export default class LiveController {
   async handle({ view }: HttpContext) {

@@ -14,6 +14,8 @@ const TimerController = () => import('#controllers/timer_controller')
 const CategoryClimbersController = () => import('#controllers/category_climbers_controller')
 const LogsController = () => import('#controllers/logs_controller')
 const ApiController = () => import('#controllers/api_controller')
+const CGController = () => import('#controllers/cg_controller')
+const CgApiController = () => import('#controllers/cg_api_controller')
 import Category from '#models/category'
 import router from '@adonisjs/core/services/router'
 import transmit from '@adonisjs/transmit/services/main'
@@ -63,3 +65,23 @@ router.get('/logs/content', [LogsController, 'content'])
 router.get('/api/current-category', [ApiController, 'getCurrentCategory'])
 router.post('/api/current-category', [ApiController, 'setCurrentCategory'])
 router.get('/api/group/:group', [ApiController, 'clibmersByGroup'])
+
+router.post('/api/cg/leftclimber/:climberId', [CgApiController, 'setLeftClimber'])
+router.post('/api/cg/men_q_results/:categoryId', [CgApiController, 'setMenQResults'])
+router.post('/api/cg/women_q_results/:categoryId', [CgApiController, 'setWomenQResults'])
+
+const registerCgRoute = (route: string) =>
+  router.get('/cg/' + route, async ({ view }) => {
+    return view.render('pages/cg/' + route)
+  })
+registerCgRoute('left_climber')
+registerCgRoute('right_climber')
+registerCgRoute('timer')
+registerCgRoute('results_women_sf')
+registerCgRoute('results_men_sf')
+registerCgRoute('results_women_f')
+registerCgRoute('results_men_f')
+registerCgRoute('results_women_q')
+registerCgRoute('results_men_q')
+registerCgRoute('all')
+router.post('/api/cg/data', [CGController, 'data'])

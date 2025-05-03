@@ -123,11 +123,12 @@ const main = async () => {
     },
   })
 
-  const subscription = transmit.subscription('timer')
+  const subscription = transmit.subscription('timer2')
   await subscription.create()
 
   subscription.onMessage((data) => {
-    document.getElementById('timer').innerText = timeToString(data.time)
+    console.log(data, timeToString(data.time))
+    document.getElementById('timer').innerText = data.time
   })
 }
 main()
