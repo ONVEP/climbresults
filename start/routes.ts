@@ -66,6 +66,8 @@ router.get('/api/current-category', [ApiController, 'getCurrentCategory'])
 router.post('/api/current-category', [ApiController, 'setCurrentCategory'])
 router.get('/api/group/:group', [ApiController, 'clibmersByGroup'])
 
+router.post('/api/cg/timer/show', [CgApiController, 'showTimer'])
+router.post('/api/cg/timer/hide', [CgApiController, 'hideTimer'])
 router.post('/api/cg/leftclimber/:climberId', [CgApiController, 'setLeftClimber'])
 router.post('/api/cg/men_q_results/:categoryId', [CgApiController, 'setMenQResults'])
 router.post('/api/cg/women_q_results/:categoryId', [CgApiController, 'setWomenQResults'])
