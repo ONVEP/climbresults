@@ -31,7 +31,7 @@ export default class LogsController {
     return response.redirect().toPath('/logs')
   }
 
-  async content({ logger, view, response }: HttpContext) {
+  async content({ response }: HttpContext) {
     return response.redirect().toPath('/')
     // const logFile = await readFile('tmp/logs/app.log', 'utf-8').catch((err) => {
     //   logger.error({ err }, 'Error while reading log file')

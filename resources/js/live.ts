@@ -214,7 +214,7 @@ document.addEventListener('DOMContentLoaded', () => {
 })
 
 import { Transmit } from '@adonisjs/transmit-client'
-import { timeToString } from './lib'
+import { timeToString } from './lib.js'
 
 const main = async () => {
   const transmit = new Transmit({

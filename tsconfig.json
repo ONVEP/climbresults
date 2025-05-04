@@ -3,6 +3,7 @@
   "compilerOptions": {
     "rootDir": "./",
     "outDir": "./build",
+    "lib": ["DOM", "ESNext", "DOM.Iterable", "ES2020"],
     "resolveJsonModule": true
   }
 }
