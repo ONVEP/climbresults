@@ -2,7 +2,7 @@ import type { CGLayers, ClimberRow } from '#providers/cg_provider'
 import { Transmit } from '@adonisjs/transmit-client'
 
 const updateRow = (result: ClimberRow | null, idx: number) => {
-  const rows = document.querySelectorAll(`[data-cg-row="${idx + 1}"]`)
+  const rows = document.querySelectorAll(`[data-cglayer="RANKING"] [data-cg-row="${idx + 1}"]`)
 
   rows.forEach((row) => {
     if (!result) {

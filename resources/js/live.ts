@@ -154,6 +154,23 @@ document.addEventListener('DOMContentLoaded', () => {
       fetch(`/api/cg/results/hide`, { method: 'POST' })
     })
   }
+
+  const showLateral = document.getElementById('show-lateral')
+  const hideLateral = document.getElementById('hide-lateral')
+  if (showLateral && hideLateral) {
+    showLateral.addEventListener('click', () => {
+      fetch(`/api/cg/lateral/${currentCategory?.value}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ background: resultBackground.value }),
+      })
+    })
+    hideLateral.addEventListener('click', () => {
+      fetch(`/api/cg/lateral/hide`, { method: 'POST' })
+    })
+  }
 })
 
 import { Transmit } from '@adonisjs/transmit-client'

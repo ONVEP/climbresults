@@ -67,6 +67,46 @@ export default class ApiController {
     CGStatus.hideLayer('RANKING')
   }
 
+  async setLateral({ request, logger }: HttpContext) {
+    const climbers = await CategoryClimber.query()
+      .where('category_id', request.param('categoryId'))
+      .orderBy('place', 'asc')
+      .preload('results')
+      .preload('climber')
+      .exec()
+    logger.debug(`Setting climbers for category ${request.param('categoryId')}`)
+    const climberData = climbers.map((climber) => ({
+      catClimberId: climber.id,
+      nationality: climber.climber.nationality,
+      first_name: climber.climber.firstName,
+      last_name: climber.climber.lastName,
+      full_name: `${climber.climber.firstName} ${climber.climber.lastName}`,
+      tag: climber.climber.tag,
+      place: climber.place,
+      score: climber.score,
+      top_tries: climber.results.reduce((acc, result) => acc + (result.topTries ?? 0), 0),
+      zone_tries: climber.results.reduce((acc, result) => acc + (result.zoneTries ?? 0), 0),
+      flag: climber.climber.flagUrl ?? '',
+      routes: climber.results.map((result) => ({
+        zone: result.zone ?? false,
+        top: result.top ?? false,
+        current: false,
+      })),
+    }))
+    logger.debug(
+      `Setting results for category ${request.param('categoryId')} with background ${JSON.stringify(request.body())}`,
+      climberData
+    )
+    CGStatus.showLayer('LATERAL_RANKING', {
+      results: climberData,
+      background: request.body().background,
+    })
+  }
+
+  async hideLateral() {
+    CGStatus.hideLayer('LATERAL_RANKING')
+  }
+
   async showTimer() {
     CGStatus.showLayer('TIMER')
   }

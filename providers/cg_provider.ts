@@ -42,6 +42,13 @@ export type CGLayers = {
       background: string
     } | null
   }
+  LATERAL_RANKING: {
+    shown: boolean
+    data: {
+      results: ClimberRow[]
+      background: string
+    } | null
+  }
 }
 
 export type ClimberRow = {
@@ -79,6 +86,10 @@ class CGProvider {
         data: null,
       },
       RANKING: {
+        shown: false,
+        data: null,
+      },
+      LATERAL_RANKING: {
         shown: false,
         data: null,
       },

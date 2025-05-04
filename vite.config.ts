@@ -14,6 +14,8 @@ export default defineConfig({
         'resources/js/app.js',
         'resources/js/live.ts',
         'resources/js/results.js',
+        'resources/js/results.ts',
+        'resources/js/lateral_results.ts',
         'resources/js/timer.js',
         'resources/js/cg.ts',
       ],

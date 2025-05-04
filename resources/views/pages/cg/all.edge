@@ -6,11 +6,12 @@
     <title>
       ALL GRAPHICS
     </title>
-    @vite(['resources/css/cg.css', 'resources/js/cg.ts', 'resources/js/results.ts'])
+    @vite(['resources/css/cg.css', 'resources/js/cg.ts', 'resources/js/results.ts', 'resources/js/lateral_results.ts'])
   </head>
   <body class="font-bebas h-screen w-screen relative overflow-hidden">
     @include('pages/cg/parts/left_climber')
     @include('pages/cg/parts/timer')
     @include('pages/cg/parts/results')
+    @include('pages/cg/parts/lateral_results')
   </body>
 </html>

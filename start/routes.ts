@@ -71,6 +71,8 @@ router.post('/api/cg/timer/hide', [CgApiController, 'hideTimer'])
 router.post('/api/cg/leftclimber/:climberId', [CgApiController, 'setLeftClimber'])
 router.post('/api/cg/results/hide', [CgApiController, 'hideResults'])
 router.post('/api/cg/results/:categoryId', [CgApiController, 'setResults'])
+router.post('/api/cg/lateral/hide', [CgApiController, 'hideLateral'])
+router.post('/api/cg/lateral/:categoryId', [CgApiController, 'setLateral'])
 
 const registerCgRoute = (route: string) =>
   router.get('/cg/' + route, async ({ view }) => {
