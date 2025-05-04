@@ -18,7 +18,13 @@ export default defineConfig({
         'resources/js/lateral_results.ts',
         'resources/js/timer.js',
         'resources/js/cg.ts',
-        'resources/**/*',
+        'resources/images/ECB25_BG_MEN_F.png',
+        'resources/images/ECB25_BG_WOMEN_F.png',
+        'resources/images/ECB25_BG_MEN_SF.png',
+        'resources/images/ECB25_BG_WOMEN_SF.png',
+        'resources/images/ECB25_BG_MEN_Q.png',
+        'resources/images/ECB25_BG_WOMEN_Q.png',
+        
       ],
 
       /**
