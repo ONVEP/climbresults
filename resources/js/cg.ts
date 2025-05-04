@@ -25,9 +25,17 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (data.data) {
         for (const [key, value] of Object.entries(data.data)) {
           if (typeof value !== 'string' && value !== null && value !== undefined) continue
-          const element = document.querySelectorAll(`[data-cg="${key}"]`)
-          for (const el of element) {
+          const textElements = document.querySelectorAll(`span[data-cg="${key}"]`)
+          for (const el of textElements) {
             el.textContent = value ?? ''
+          }
+          const imgElements = document.querySelectorAll(`img[data-cg="${key}"]`)
+          for (const el of imgElements) {
+            if (value) {
+              el.setAttribute('src', value)
+            } else {
+              el.removeAttribute('src')
+            }
           }
         }
       }

@@ -37,6 +37,7 @@ export default defineConfig({
     () => import('@adonisjs/lucid/database_provider'),
     () => import('@adonisjs/auth/auth_provider'),
     () => import('@adonisjs/transmit/transmit_provider'),
+    () => import('#providers/cg_provider'),
   ],
 
   /*
@@ -47,7 +48,11 @@ export default defineConfig({
   | List of modules to import before starting the application.
   |
   */
-  preloads: [() => import('#start/routes'), () => import('#start/kernel'), () => import('#start/events')],
+  preloads: [
+    () => import('#start/routes'),
+    () => import('#start/kernel'),
+    () => import('#start/events'),
+  ],
 
   /*
   |--------------------------------------------------------------------------

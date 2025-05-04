@@ -12,7 +12,7 @@ export default defineConfig({
         'resources/css/app.css',
         'resources/css/cg.css',
         'resources/js/app.js',
-        'resources/js/live.js',
+        'resources/js/live.ts',
         'resources/js/results.js',
         'resources/js/timer.js',
         'resources/js/cg.ts',

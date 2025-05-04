@@ -69,8 +69,8 @@ router.get('/api/group/:group', [ApiController, 'clibmersByGroup'])
 router.post('/api/cg/timer/show', [CgApiController, 'showTimer'])
 router.post('/api/cg/timer/hide', [CgApiController, 'hideTimer'])
 router.post('/api/cg/leftclimber/:climberId', [CgApiController, 'setLeftClimber'])
-router.post('/api/cg/men_q_results/:categoryId', [CgApiController, 'setMenQResults'])
-router.post('/api/cg/women_q_results/:categoryId', [CgApiController, 'setWomenQResults'])
+router.post('/api/cg/results/hide', [CgApiController, 'hideResults'])
+router.post('/api/cg/results/:categoryId', [CgApiController, 'setResults'])
 
 const registerCgRoute = (route: string) =>
   router.get('/cg/' + route, async ({ view }) => {

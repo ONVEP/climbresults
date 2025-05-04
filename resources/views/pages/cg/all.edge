@@ -8,10 +8,9 @@
     </title>
     @vite(['resources/css/cg.css', 'resources/js/cg.ts', 'resources/js/results.ts'])
   </head>
-  <body class="font-bebas h-screen w-screen relative">
+  <body class="font-bebas h-screen w-screen relative overflow-hidden">
     @include('pages/cg/parts/left_climber')
     @include('pages/cg/parts/timer')
-    {{-- @include('pages/cg/parts/results_men_q') --}}
-    @include('pages/cg/parts/results_women_q')
+    @include('pages/cg/parts/results')
   </body>
 </html>

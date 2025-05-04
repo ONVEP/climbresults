@@ -2,39 +2,55 @@ import type { CGLayers, ClimberRow } from '#providers/cg_provider'
 import { Transmit } from '@adonisjs/transmit-client'
 
 const updateRow = (result: ClimberRow | null, idx: number) => {
-  const row = document.querySelector(`[data-cg-row="${idx + 1}"]`)
-  console.log('Row:', row)
+  const rows = document.querySelectorAll(`[data-cg-row="${idx + 1}"]`)
 
-  if (!result) {
-    row?.classList.add('opacity-0')
-    row?.classList.remove('opacity-100')
-    return
-  }
+  rows.forEach((row) => {
+    if (!result) {
+      row?.classList.add('opacity-0')
+      row?.classList.remove('opacity-100')
+      return
+    }
 
-  row?.classList.remove('opacity-0')
-  row?.classList.add('opacity-100')
+    row?.classList.remove('opacity-0')
+    row?.classList.add('opacity-100')
 
-  const rank = document.querySelector(`[data-cg-row="${idx + 1}"] [data-cg-column="rank"]`)
-  if (rank) rank.textContent = result.place.toString()
-  const firstName = document.querySelector(
-    `[data-cg-row="${idx + 1}"] [data-cg-column="first_name"]`
-  )
-  if (firstName) firstName.textContent = result.first_name
-  const lastName = document.querySelector(`[data-cg-row="${idx + 1}"] [data-cg-column="last_name"]`)
-  if (lastName) lastName.textContent = result.last_name
-  const tag = document.querySelector(`[data-cg-row="${idx + 1}"] [data-cg-column="tag"]`)
-  if (tag) tag.textContent = result.tag
-  const nationality = document.querySelector(
-    `[data-cg-row="${idx + 1}"] [data-cg-column="nationality"]`
-  )
-  if (nationality) nationality.textContent = result.nationality
-  const score = document.querySelector(`[data-cg-row="${idx + 1}"] [data-cg-column="score"]`)
-  if (score) score.textContent = result.score?.toString() ?? ''
-  const flag = document.querySelector(
-    `[data-cg-row="${idx + 1}"] [data-cg-column="flag"]`
-  ) as HTMLImageElement
-  console.log('Flag:', flag)
-  if (flag) flag.src = result.flag
+    const rank = row.querySelector(`[data-cg-column="rank"]`)
+    if (rank) rank.textContent = result.place.toString()
+    const firstName = row.querySelector(`[data-cg-column="first_name"]`)
+    if (firstName) firstName.textContent = result.first_name
+    const lastName = row.querySelector(`[data-cg-column="last_name"]`)
+    if (lastName) lastName.textContent = result.last_name
+    const tag = row.querySelector(`[data-cg-column="tag"]`)
+    if (tag) tag.textContent = result.tag
+    const nationality = row.querySelector(`[data-cg-column="nationality"]`)
+    if (nationality) nationality.textContent = result.nationality
+    const score = row.querySelector(`[data-cg-column="score"]`)
+    if (score) score.textContent = result.score?.toString() ?? ''
+    const flag = row.querySelector(`[data-cg-column="flag"]`) as HTMLImageElement
+    if (flag) flag.src = result.flag
+
+    const progression = row.querySelector('[data-cg-column="progression"]')
+    if (progression) {
+      for (let i = 0; i < 4; i++) {
+        const zone = result.routes[i]?.zone
+        const top = result.routes[i]?.top
+        if (top) {
+          progression.children[i].children[0].classList.add('bg-cg-accent')
+          progression.children[i].children[0].classList.remove('bg-cg-neutral-dark')
+        } else {
+          progression.children[i].children[0].classList.remove('bg-cg-accent')
+          progression.children[i].children[0].classList.add('bg-cg-neutral-dark')
+        }
+        if (zone) {
+          progression.children[i].children[1].classList.add('bg-cg-accent')
+          progression.children[i].children[1].classList.remove('bg-cg-neutral-dark')
+        } else {
+          progression.children[i].children[1].classList.remove('bg-cg-accent')
+          progression.children[i].children[1].classList.add('bg-cg-neutral-dark')
+        }
+      }
+    }
+  })
 }
 
 let timeout: NodeJS.Timeout | null = null
@@ -44,7 +60,7 @@ const nextPage = (results: CGLayers['RANKING']['data'], page = 0) => {
   const rows: (ClimberRow | null)[] = results?.results.slice(page * 10, (page + 1) * 10) ?? []
   while (rows.length < 10) rows.push(null)
   rows?.forEach((result, idx) => updateRow(result, idx))
-  if(timeout) clearTimeout(timeout)
+  if (timeout) clearTimeout(timeout)
   timeout = setTimeout(
     nextPage,
     10000,

@@ -1,6 +1,7 @@
 import CategoryClimber from '#models/category_climber'
 import Climber from '#models/climber'
 import logger from '@adonisjs/core/services/logger'
+import { ApplicationService } from '@adonisjs/core/types'
 import transmit from '@adonisjs/transmit/services/main'
 
 export type CGLayer = {
@@ -38,6 +39,7 @@ export type CGLayers = {
     shown: boolean
     data: {
       results: ClimberRow[]
+      background: string
     } | null
   }
 }
@@ -116,6 +118,46 @@ class CGProvider {
     logger.debug(`Broadcasting layer ${layer}: ${JSON.stringify(this.CG_LAYERS[layer])}`)
     transmit.broadcast(layer, this.CG_LAYERS[layer])
   }
+
+  getLayer<T extends CGLayerName>(layer: T): CGLayers[T] {
+    return this.CG_LAYERS[layer]
+  }
 }
 
 export const CGStatus = new CGProvider()
+
+export default class CGProviderService {
+  constructor(protected app: ApplicationService) {}
+
+  /**
+   * Register bindings to the container
+   */
+  register() {}
+
+  /**
+   * The container bindings have booted
+   */
+  async boot() {}
+
+  /**
+   * The application has been booted
+   */
+  async start() {}
+
+  /**
+   * The process has been started
+   */
+  async ready() {
+    transmit.on('subscribe', (channel) => {
+      if (CGStatus.getLayer(channel.channel as CGLayerName) !== undefined) {
+        logger.debug(`Client subscribed to channel ${channel.channel}`)
+        setTimeout(() => CGStatus.broadcastLayer(channel.channel as CGLayerName), 500)
+      }
+    })
+  }
+
+  /**
+   * Preparing to shutdown the app
+   */
+  async shutdown() {}
+}

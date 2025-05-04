@@ -7,7 +7,7 @@
       MOF 2024
     </title>
 
-    @vite(['resources/css/app.css', 'resources/js/live.js'])
+    @vite(['resources/css/app.css', 'resources/js/live.ts'])
   </head>
   <body class="min-h-screen w-screen font-sans bg-gray-800 text-white">
     <div class="flex flex-row">
@@ -15,7 +15,7 @@
         @include('partials/nav')
         <main class="flex flex-col gap-2 px-2">
           <div class="flex flex-row items-center gap-2">
-            <select id="current-category" class="bg-gray-700 text-white px-2 py-1 rounded w-48">
+            <select id="current-category" class="bg-gray-700 text-white px-2 py-1 mr-2 rounded w-48">
               <option value="" disabled {{ currentCategory == null || currentCategory == undefined ? 'selected' : '' }}>
                 Catégorie
               </option>
@@ -25,6 +25,28 @@
                 </option>
               @end
             </select>
+            <select id="result-background" class="bg-gray-700 text-white px-2 py-1 rounded w-48">
+              <option value="{{ asset(`resources/images/ECB25_BG_WOMEN_Q.png`) }}">
+                Qualifications F
+              </option>
+              <option value="{{ asset(`resources/images/ECB25_BG_MEN_Q.png`) }}">
+                Qualifications H
+              </option>
+              <option value="{{ asset(`resources/images/ECB25_BG_WOMEN_SF.png`) }}">
+                Demi-finales F
+              </option>
+              <option value="{{ asset(`resources/images/ECB25_BG_MEN_SF.png`) }}">
+                Demi-finales H
+              </option>
+              <option value="{{ asset(`resources/images/ECB25_BG_WOMEN_F.png`) }}">
+                Finales F
+              </option>
+              <option value="{{ asset(`resources/images/ECB25_BG_MEN_F.png`) }}">
+                Finales H
+              </option>
+            </select>
+            <button class="bg-gray-700 text-white px-2 py-1 rounded" id="show-results">ON</button>
+            <button class="bg-gray-700 text-white px-2 py-1 rounded mr-2" id="hide-results">OFF</button>
             <input
               type="number"
               id="currentClimber"
@@ -151,10 +173,7 @@
                           @end
                         </td>
                       @end
-                      <td
-                        scope="col"
-                        class="px-4 py-3 text-left text-xs font-medium text-gray-300 tracking-wider"
-                      >
+                      <td scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-300 tracking-wider">
                         {{ catclimber.score }}
                       </td>
                       <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-300">
