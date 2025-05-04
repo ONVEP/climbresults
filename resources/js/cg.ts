@@ -1,5 +1,7 @@
 import type { CGLayer } from '#providers/cg_provider'
 import { Transmit } from '@adonisjs/transmit-client'
+import.meta.glob(['../images/**'])
+
 
 document.addEventListener('DOMContentLoaded', async () => {
   const transmit = new Transmit({
