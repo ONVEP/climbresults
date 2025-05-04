@@ -18,6 +18,7 @@ export default defineConfig({
         'resources/js/lateral_results.ts',
         'resources/js/timer.js',
         'resources/js/cg.ts',
+        'resources/**/*',
       ],
 
       /**
