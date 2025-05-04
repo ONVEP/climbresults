@@ -45,10 +45,10 @@
                 Finales H
               </option>
             </select>
-            <button class="bg-gray-700 text-white px-2 py-1 rounded" id="show-results">Classement ON</button>
-            <button class="bg-gray-700 text-white px-2 py-1 rounded mr-2" id="hide-results">Classement OFF</button>
-            <button class="bg-gray-700 text-white px-2 py-1 rounded" id="show-lateral">Latéral ON</button>
-            <button class="bg-gray-700 text-white px-2 py-1 rounded mr-2" id="hide-lateral">Latéral OFF</button>
+            <button class="bg-green-700 text-white px-2 py-1 rounded" id="show-results">Classement ON</button>
+            <button class="bg-red-700 text-white px-2 py-1 rounded mr-2" id="hide-results">Classement OFF</button>
+            <button class="bg-green-700 text-white px-2 py-1 rounded" id="show-lateral">Latéral ON</button>
+            <button class="bg-red-700 text-white px-2 py-1 rounded mr-2" id="hide-lateral">Latéral OFF</button>
 
             <input
               type="number"
@@ -111,6 +111,18 @@
                       class="px-4 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider"
                     >
                       Rank
+                    </th>
+                    <th
+                      scope="col"
+                      class="py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider"
+                    >
+                      <button class="clear-left bg-gray-600 text-white px-2 py-1 rounded">!G</button>
+                    </th>
+                    <th
+                      scope="col"
+                      class="py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider"
+                    >
+                      <button class="clear-right bg-gray-600 text-white px-2 py-1 rounded">!D</button>
                     </th>
                   </tr>
                 </thead>
@@ -207,11 +219,22 @@
                         </form>
                       </td>
                       <td>
-                        <form action="/api/cg/leftclimber/{{ catclimber.id }}" method="POST" class="inline">
-                          <button type="submit" class="bg-gray-600 text-white px-2 py-1 rounded">
-                            G
+                        <button
+                          type="submit"
+                          class="bg-gray-600 text-white px-2 py-1 rounded"
+                          data-send-left="{{ catclimber.id }}"
+                        >
+                          G
                           </button>
-                        </form>
+                      </td>
+                      <td>
+                        <button
+                          type="submit"
+                          class="bg-gray-600 text-white px-2 py-1 rounded"
+                          data-send-right="{{ catclimber.id }}"
+                        >
+                          D
+                          </button>
                       </td>
                     </tr>
                   @end

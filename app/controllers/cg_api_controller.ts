@@ -11,7 +11,7 @@ export default class ApiController {
     await climber.load('climber')
     await climber.load('results')
 
-    CGStatus.updateLayer('LEFT_CLIMBER', {
+    CGStatus.showLayer('LEFT_CLIMBER', {
       catClimberId: climber.id,
       first_name: climber.climber.firstName,
       last_name: climber.climber.lastName,
@@ -28,6 +28,39 @@ export default class ApiController {
         current: false,
       })),
     })
+  }
+  async hideLeftClimber() {
+    CGStatus.hideLayer('LEFT_CLIMBER')
+  }
+
+  async setRightClimber({ request, response, logger }: HttpContext) {
+    const climberId = Number.parseInt(request.param('climberId'))
+    logger.debug(`Setting right climber to ${climberId}`)
+    const climber = await CategoryClimber.find(climberId)
+    if (!climber) return response.noContent()
+    await climber.load('climber')
+    await climber.load('results')
+
+    CGStatus.showLayer('RIGHT_CLIMBER', {
+      catClimberId: climber.id,
+      first_name: climber.climber.firstName,
+      last_name: climber.climber.lastName,
+      full_name: `${climber.climber.firstName} ${climber.climber.lastName}`,
+      tag: climber.climber.tag,
+      nationality: climber.climber.nationality,
+      place: climber.place,
+      score: climber.score,
+      top_tries: climber.results.reduce((acc, result) => acc + (result.topTries ?? 0), 0),
+      zone_tries: climber.results.reduce((acc, result) => acc + (result.zoneTries ?? 0), 0),
+      routes: climber.results.map((result) => ({
+        zone: result.zone ?? false,
+        top: result.top ?? false,
+        current: false,
+      })),
+    })
+  }
+  async hideRightClimber() {
+    CGStatus.hideLayer('RIGHT_CLIMBER')
   }
 
   async setResults({ request, logger }: HttpContext) {

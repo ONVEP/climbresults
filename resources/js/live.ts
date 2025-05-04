@@ -171,6 +171,46 @@ document.addEventListener('DOMContentLoaded', () => {
       fetch(`/api/cg/lateral/hide`, { method: 'POST' })
     })
   }
+
+  const leftButtons = document.querySelectorAll('[data-send-left]')
+  leftButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const climberId = button.getAttribute('data-send-left')
+      if (climberId) {
+        fetch(`/api/cg/leftclimber/${climberId}`, {
+          method: 'POST',
+        })
+      }
+    })
+  })
+  const rightButtons = document.querySelectorAll('[data-send-right]')
+  rightButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const climberId = button.getAttribute('data-send-right')
+      if (climberId) {
+        fetch(`/api/cg/rightclimber/${climberId}`, {
+          method: 'POST',
+        })
+      }
+    })
+  })
+
+  const leftClearButtons = document.querySelectorAll('.clear-left')
+  leftClearButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      fetch('/api/cg/leftclimber/hide', {
+        method: 'POST',
+      })
+    })
+  })
+  const rightClearButtons = document.querySelectorAll('.clear-right')
+  rightClearButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      fetch('/api/cg/rightclimber/hide', {
+        method: 'POST',
+      })
+    })
+  })
 })
 
 import { Transmit } from '@adonisjs/transmit-client'

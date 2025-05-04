@@ -20,7 +20,8 @@ export default class ApiController {
         'climbers.last_name',
         'climbers.id',
         'climbers.nationality',
-        'climbers.tag'
+        'climbers.tag',
+        'category_climbers.id as category_climber_id'
       )
       .from('climber_route_results')
       .join(
