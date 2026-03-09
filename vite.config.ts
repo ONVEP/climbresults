@@ -1,8 +1,10 @@
 import adonisjs from '@adonisjs/vite/client'
+import tailwindcss from '@tailwindcss/vite'
 import { defineConfig } from 'vite'
 
 export default defineConfig({
   plugins: [
+    tailwindcss(),
     adonisjs({
       /**
        * Entrypoints of your application. Each entrypoint will
@@ -24,7 +26,6 @@ export default defineConfig({
         'resources/images/ECB25_BG_WOMEN_SF.png',
         'resources/images/ECB25_BG_MEN_Q.png',
         'resources/images/ECB25_BG_WOMEN_Q.png',
-        
       ],
 
       /**
