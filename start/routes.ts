@@ -77,18 +77,11 @@ router.post('/api/cg/results/:categoryId', [CgApiController, 'setResults'])
 router.post('/api/cg/lateral/hide', [CgApiController, 'hideLateral'])
 router.post('/api/cg/lateral/:categoryId', [CgApiController, 'setLateral'])
 
-const registerCgRoute = (route: string) =>
-  router.get('/cg/' + route, async ({ view }) => {
-    return view.render('pages/cg/' + route)
-  })
-registerCgRoute('left_climber')
-registerCgRoute('right_climber')
-registerCgRoute('timer')
-registerCgRoute('results_women_sf')
-registerCgRoute('results_men_sf')
-registerCgRoute('results_women_f')
-registerCgRoute('results_men_f')
-registerCgRoute('results_women_q')
-registerCgRoute('results_men_q')
-registerCgRoute('all')
+router.get('/cg/:route', async ({ view, response, params }) => {
+  try {
+    return await view.render('pages/cg/' + params.route)
+  } catch (error) {
+    return response.status(404).send('Page not found')
+  }
+})
 router.post('/api/cg/data', [CGController, 'data'])
