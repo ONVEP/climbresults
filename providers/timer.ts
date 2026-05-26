@@ -1,11 +1,11 @@
-import env from '#start/env'
+import { Config } from '#providers/config_provider'
 import transmit from '@adonisjs/transmit/services/main'
 import { timeToString } from '../app/utils/conversion.js'
 import { CGStatus } from './cg_provider.js'
 
-const TIMER_DURATION = env.get('TIMER_DURATION', 0)
-const TIMER_PAUSE_DURATION = env.get('TIMER_PAUSE_DURATION', 0)
-const TIMER_LOOP = env.get('TIMER_LOOP', false)
+const TIMER_DURATION = Config.get('TIMER_DURATION').value
+const TIMER_PAUSE_DURATION = Config.get('TIMER_PAUSE_DURATION').value
+const TIMER_LOOP = Config.get('TIMER_LOOP').value
 
 export class Timer {
   private startTimestamp: number | null = null

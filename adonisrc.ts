@@ -38,7 +38,9 @@ export default defineConfig({
     () => import('@adonisjs/lucid/database_provider'),
     () => import('@adonisjs/auth/auth_provider'),
     () => import('@adonisjs/transmit/transmit_provider'),
+    () => import('#providers/config_provider'),
     () => import('#providers/cg_provider'),
+    () => import('#providers/icon_provider'),
   ],
 
   /*

@@ -17,7 +17,12 @@ export default class ClimbersController {
   async create({ request, response }: HttpContext) {
     const { firstName, lastName, nationality } = request.all()
 
-    await Climber.create({ firstName, lastName, nationality })
+    await Climber.create({
+      firstName,
+      lastName,
+      nationality,
+      flagUrl: `https://d1n1qj9geboqnb.cloudfront.net/flags/${nationality}.png`,
+    })
 
     return response.redirect().toPath('/climbers')
   }

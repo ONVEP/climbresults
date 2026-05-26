@@ -1,6 +1,6 @@
-import Category from '#models/category'
-import { PollingStatus } from '#scrappers/ifsc'
-import env from '#start/env'
+import type Category from '#models/category'
+import { Config } from '#providers/config_provider'
+import type { PollingStatus } from '#scrappers/ifsc'
 import logger from '@adonisjs/core/services/logger'
 
 class ScrapperProvider {
@@ -13,7 +13,7 @@ class ScrapperProvider {
       this.watchList.push(category)
     }
     if (!this.intervalId) {
-      this.intervalId = setInterval(() => this.poll(), env.get('POLLING_INTERVAL', 1000))
+      this.intervalId = setInterval(() => this.poll(), Config.get('POLLING_INTERVAL').value)
     }
   }
 

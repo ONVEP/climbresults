@@ -32,7 +32,7 @@ export default class CategoryClimbersController {
 
     transmit.broadcast('livegraphics', { message: 'reload' })
 
-    return response.redirect().toPath('/')
+    return response.redirect().back()
   }
 
   async results({ params, request, response }: HttpContext) {
@@ -50,7 +50,7 @@ export default class CategoryClimbersController {
 
     transmit.broadcast('livegraphics', { message: 'reload' })
 
-    return response.redirect().toPath('/')
+    return response.redirect().back()
   }
 
   async delete({ params, response }: HttpContext) {
@@ -61,6 +61,6 @@ export default class CategoryClimbersController {
 
     transmit.broadcast('livegraphics', { message: 'reload' })
 
-    return response.redirect().toPath('/climbers')
+    return response.redirect().back()
   }
 }

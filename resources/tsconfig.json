@@ -1,14 +1,11 @@
 {
   "extends": "@adonisjs/tsconfig/tsconfig.client.json",
   "compilerOptions": {
-    "baseUrl": ".",
-    "jsx": "preserve",
     "module": "ESNext",
-    "jsxImportSource": "vue",
-    "paths": {
-      "~/*": ["./*"],
-      "#common/*": ["../common/*.js"]
-    }
+    "moduleResolution": "bundler",
+    "jsx": "preserve",
+    "jsxImportSource": "solid-js",
+    "lib": ["ESNext", "DOM", "DOM.Iterable"]
   },
-  "include": ["./**/*.ts", "./**/*.vue"]
+  "include": ["./**/*.tsx", "./**/*.ts"]
 }

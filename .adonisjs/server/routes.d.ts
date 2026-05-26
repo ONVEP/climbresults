@@ -25,6 +25,7 @@ export type ScannedRoutes = {
     'timer.pause': { paramsTuple?: []; params?: {} }
     'timer.reset': { paramsTuple?: []; params?: {} }
     'timer.adjust': { paramsTuple?: []; params?: {} }
+    'config.index': { paramsTuple?: []; params?: {} }
     'logs.index': { paramsTuple?: []; params?: {} }
     'logs.clear': { paramsTuple?: []; params?: {} }
     'logs.content': { paramsTuple?: []; params?: {} }
@@ -41,6 +42,8 @@ export type ScannedRoutes = {
     'cg_api.set_results': { paramsTuple: [ParamValue]; params: {'categoryId': ParamValue} }
     'cg_api.hide_lateral': { paramsTuple?: []; params?: {} }
     'cg_api.set_lateral': { paramsTuple: [ParamValue]; params: {'categoryId': ParamValue} }
+    'config.get_config': { paramsTuple?: []; params?: {} }
+    'config.update_config': { paramsTuple?: []; params?: {} }
     'cg.data': { paramsTuple?: []; params?: {} }
   }
   GET: {
@@ -48,20 +51,24 @@ export type ScannedRoutes = {
     'live': { paramsTuple?: []; params?: {} }
     'climbers.index': { paramsTuple?: []; params?: {} }
     'categories.index': { paramsTuple?: []; params?: {} }
+    'config.index': { paramsTuple?: []; params?: {} }
     'logs.index': { paramsTuple?: []; params?: {} }
     'logs.content': { paramsTuple?: []; params?: {} }
     'api.get_current_category': { paramsTuple?: []; params?: {} }
     'api.clibmers_by_group': { paramsTuple: [ParamValue]; params: {'group': ParamValue} }
+    'config.get_config': { paramsTuple?: []; params?: {} }
   }
   HEAD: {
     'event_stream': { paramsTuple?: []; params?: {} }
     'live': { paramsTuple?: []; params?: {} }
     'climbers.index': { paramsTuple?: []; params?: {} }
     'categories.index': { paramsTuple?: []; params?: {} }
+    'config.index': { paramsTuple?: []; params?: {} }
     'logs.index': { paramsTuple?: []; params?: {} }
     'logs.content': { paramsTuple?: []; params?: {} }
     'api.get_current_category': { paramsTuple?: []; params?: {} }
     'api.clibmers_by_group': { paramsTuple: [ParamValue]; params: {'group': ParamValue} }
+    'config.get_config': { paramsTuple?: []; params?: {} }
   }
   POST: {
     'subscribe': { paramsTuple?: []; params?: {} }
@@ -87,6 +94,7 @@ export type ScannedRoutes = {
     'cg_api.set_results': { paramsTuple: [ParamValue]; params: {'categoryId': ParamValue} }
     'cg_api.hide_lateral': { paramsTuple?: []; params?: {} }
     'cg_api.set_lateral': { paramsTuple: [ParamValue]; params: {'categoryId': ParamValue} }
+    'config.update_config': { paramsTuple?: []; params?: {} }
     'cg.data': { paramsTuple?: []; params?: {} }
   }
   DELETE: {

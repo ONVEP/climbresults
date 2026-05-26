@@ -1,9 +1,11 @@
 import adonisjs from '@adonisjs/vite/client'
 import tailwindcss from '@tailwindcss/vite'
 import { defineConfig } from 'vite'
+import solidPlugin from 'vite-plugin-solid'
 
 export default defineConfig({
   plugins: [
+    solidPlugin(),
     tailwindcss(),
     adonisjs({
       /**
@@ -13,7 +15,7 @@ export default defineConfig({
       entrypoints: [
         'resources/css/app.css',
         'resources/css/cg.css',
-        'resources/js/app.js',
+        'resources/js/app.tsx',
         'resources/js/live.ts',
         'resources/js/results.js',
         'resources/js/results.ts',
