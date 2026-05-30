@@ -26,6 +26,7 @@ export type ScannedRoutes = {
     'timer.pause': { paramsTuple?: []; params?: {} }
     'timer.reset': { paramsTuple?: []; params?: {} }
     'timer.adjust': { paramsTuple?: []; params?: {} }
+    'timer.state': { paramsTuple?: []; params?: {} }
     'images.index': { paramsTuple?: []; params?: {} }
     'images.upload': { paramsTuple?: []; params?: {} }
     'config.index': { paramsTuple?: []; params?: {} }
@@ -55,6 +56,7 @@ export type ScannedRoutes = {
     'live': { paramsTuple?: []; params?: {} }
     'climbers.index': { paramsTuple?: []; params?: {} }
     'categories.index': { paramsTuple?: []; params?: {} }
+    'timer.state': { paramsTuple?: []; params?: {} }
     'images.index': { paramsTuple?: []; params?: {} }
     'config.index': { paramsTuple?: []; params?: {} }
     'logs.index': { paramsTuple?: []; params?: {} }
@@ -69,6 +71,7 @@ export type ScannedRoutes = {
     'live': { paramsTuple?: []; params?: {} }
     'climbers.index': { paramsTuple?: []; params?: {} }
     'categories.index': { paramsTuple?: []; params?: {} }
+    'timer.state': { paramsTuple?: []; params?: {} }
     'images.index': { paramsTuple?: []; params?: {} }
     'config.index': { paramsTuple?: []; params?: {} }
     'logs.index': { paramsTuple?: []; params?: {} }

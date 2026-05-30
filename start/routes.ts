@@ -49,6 +49,7 @@ router
     router.post('/timer/pause', [TimerController, 'pause'])
     router.post('/timer/reset', [TimerController, 'reset'])
     router.post('/timer/adjust', [TimerController, 'adjust'])
+    router.get('/timer/state', [TimerController, 'state'])
 
     router.get('/live/results', async ({ view }) => {
       const categories = await Category.query()

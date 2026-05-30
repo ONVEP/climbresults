@@ -28,7 +28,18 @@ export type CGClimber = {
 
 type CGTimer = {
   shown: boolean
-  data: { t1: string; t2: string; t3: string } | null
+  data: {
+    t1: string
+    t2: string
+    t3: string
+    serverNow: number
+    startTimestamp: number | null
+    pausedTimestamp: number | null
+    duration: number
+    pauseDuration: number
+    loop: boolean
+    time: number
+  } | null
 }
 
 export type CGLayers = {

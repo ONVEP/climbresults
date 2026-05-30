@@ -216,6 +216,29 @@ document.addEventListener('DOMContentLoaded', () => {
 import { Transmit } from '@adonisjs/transmit-client'
 import { timeToString } from './lib.js'
 
+type TimerSyncState = {
+  serverNow: number
+  startTimestamp: number | null
+  pausedTimestamp: number | null
+  duration: number
+  pauseDuration: number
+  loop: boolean
+  time: number
+}
+
+function computeSyncedTime(state: TimerSyncState, now: number) {
+  let absoluteTimeEllapsed = 0
+  if (state.startTimestamp !== null) {
+    absoluteTimeEllapsed = Math.round(
+      ((state.pausedTimestamp === null ? now : state.pausedTimestamp) - state.startTimestamp) / 1000
+    )
+  }
+
+  const loopElapsed = (absoluteTimeEllapsed % (state.duration + state.pauseDuration)) + 1
+  if (loopElapsed < state.pauseDuration) return state.pauseDuration - loopElapsed
+  return state.pauseDuration + state.duration - loopElapsed
+}
+
 const main = async () => {
   const transmit = new Transmit({
     baseUrl: window.location.origin,
@@ -227,10 +250,50 @@ const main = async () => {
   const subscription = transmit.subscription('timer2')
   await subscription.create()
 
-  subscription.onMessage((data: { time: number }) => {
-    console.log(data, timeToString(data.time))
-    document.getElementById('timer')!.innerText = data.time.toString()
+  let timerState: TimerSyncState | null = null
+  let serverOffsetMs = 0
+  let refreshTimeout: number | null = null
+
+  const timerValue = document.getElementById('timer')
+
+  const renderTimer = () => {
+    if (!timerValue || !timerState) return
+
+    const syncedNow = Date.now() + serverOffsetMs
+    const time = computeSyncedTime(timerState, syncedNow)
+    timerValue.innerText = timeToString(time)
+
+    if (refreshTimeout) window.clearTimeout(refreshTimeout)
+    if (timerState.startTimestamp !== null && timerState.pausedTimestamp === null) {
+      const elapsed = syncedNow - timerState.startTimestamp
+      const remainingMs = 1000 - (elapsed % 1000)
+      refreshTimeout = window.setTimeout(renderTimer, Math.max(10, remainingMs))
+    }
+  }
+
+  const applyState = (state: TimerSyncState) => {
+    timerState = state
+    serverOffsetMs = state.serverNow - Date.now()
+    renderTimer()
+  }
+
+  const syncFromHttp = async () => {
+    try {
+      const response = await fetch('/timer/state')
+      if (!response.ok) return
+      const state = (await response.json()) as TimerSyncState
+      applyState(state)
+    } catch (error) {
+      console.warn('Unable to sync timer state from server', error)
+    }
+  }
+
+  subscription.onMessage((data: TimerSyncState) => {
+    applyState(data)
   })
+
+  await syncFromHttp()
+  window.setInterval(syncFromHttp, 15000)
 }
 main()
 

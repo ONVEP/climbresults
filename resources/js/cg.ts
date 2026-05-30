@@ -1,7 +1,39 @@
 import type { CGLayer } from '#providers/cg_provider'
 import { Transmit } from '@adonisjs/transmit-client'
+import { timeToString } from './lib.js'
 import.meta.glob(['../images/**'])
 
+type TimerSyncState = {
+  serverNow: number
+  startTimestamp: number | null
+  pausedTimestamp: number | null
+  duration: number
+  pauseDuration: number
+  loop: boolean
+  time: number
+}
+
+function isTimerSyncState(data: Record<string, unknown>): data is TimerSyncState {
+  return (
+    typeof data.serverNow === 'number' &&
+    typeof data.duration === 'number' &&
+    typeof data.pauseDuration === 'number' &&
+    typeof data.loop === 'boolean'
+  )
+}
+
+function computeSyncedTime(state: TimerSyncState, now: number) {
+  let absoluteTimeEllapsed = 0
+  if (state.startTimestamp !== null) {
+    absoluteTimeEllapsed = Math.round(
+      ((state.pausedTimestamp === null ? now : state.pausedTimestamp) - state.startTimestamp) / 1000
+    )
+  }
+
+  const loopElapsed = (absoluteTimeEllapsed % (state.duration + state.pauseDuration)) + 1
+  if (loopElapsed < state.pauseDuration) return state.pauseDuration - loopElapsed
+  return state.pauseDuration + state.duration - loopElapsed
+}
 
 document.addEventListener('DOMContentLoaded', async () => {
   const transmit = new Transmit({
@@ -12,6 +44,59 @@ document.addEventListener('DOMContentLoaded', async () => {
   })
 
   const layers = document.querySelectorAll('[data-cglayer]')
+  let timerState: TimerSyncState | null = null
+  let timerOffsetMs = 0
+  let timerRefreshTimeout: number | null = null
+  let hasHttpTimerSync = false
+
+  const applyTimerState = (state: TimerSyncState, source: 'http' | 'layer') => {
+    timerState = state
+    if (source === 'http') {
+      timerOffsetMs = state.serverNow - Date.now()
+      hasHttpTimerSync = true
+    } else if (!hasHttpTimerSync) {
+      const candidateOffset = state.serverNow - Date.now()
+      // Ignore obviously stale layer payloads, they can be old snapshots rebroadcast on subscribe.
+      if (Math.abs(candidateOffset) < 5000) {
+        timerOffsetMs = candidateOffset
+      }
+    }
+    renderTimerLayer()
+  }
+
+  const syncTimerFromHttp = async () => {
+    try {
+      const response = await fetch('/timer/state')
+      if (!response.ok) return
+      const state = (await response.json()) as TimerSyncState
+      applyTimerState(state, 'http')
+    } catch (error) {
+      console.warn('Unable to sync timer state from server', error)
+    }
+  }
+
+  const renderTimerLayer = () => {
+    if (!timerState) return
+    const syncedNow = Date.now() + timerOffsetMs
+    const time = timeToString(computeSyncedTime(timerState, syncedNow))
+    const timerLayer = document.querySelector('[data-cglayer="TIMER"]')
+    if (!timerLayer) return
+
+    const t1 = timerLayer.querySelector('span[data-cg="t1"]')
+    const t2 = timerLayer.querySelector('span[data-cg="t2"]')
+    const t3 = timerLayer.querySelector('span[data-cg="t3"]')
+
+    if (t1) t1.textContent = time[0] ?? '0'
+    if (t2) t2.textContent = time[2] ?? '0'
+    if (t3) t3.textContent = time[3] ?? '0'
+
+    if (timerRefreshTimeout) window.clearTimeout(timerRefreshTimeout)
+    if (timerState.startTimestamp !== null && timerState.pausedTimestamp === null) {
+      const elapsed = syncedNow - timerState.startTimestamp
+      const remainingMs = 1000 - (elapsed % 1000)
+      timerRefreshTimeout = window.setTimeout(renderTimerLayer, Math.max(10, remainingMs))
+    }
+  }
 
   for (const layer of layers) {
     const layerName = layer.getAttribute('data-cglayer')
@@ -74,7 +159,14 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
           }
         }
+
+        if (layerName === 'TIMER' && isTimerSyncState(data.data)) {
+          applyTimerState(data.data, 'layer')
+        }
       }
     })
   }
+
+  await syncTimerFromHttp()
+  window.setInterval(syncTimerFromHttp, 15000)
 })

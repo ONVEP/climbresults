@@ -2,6 +2,10 @@ import { timer } from '#providers/timer'
 import type { HttpContext } from '@adonisjs/core/http'
 
 export default class LiveController {
+  async state({ response }: HttpContext) {
+    return response.ok(timer.getClientState())
+  }
+
   async start({ response }: HttpContext) {
     timer.start()
     return response.ok({})
