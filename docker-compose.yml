@@ -1,0 +1,59 @@
+services:
+  app:
+    build:
+      context: .
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      PORT: 8080
+      HOST: 0.0.0.0
+      LOG_LEVEL: info
+      APP_KEY: ${APP_KEY:-change-me}
+      SESSION_DRIVER: ${SESSION_DRIVER:-cookie}
+      ROUTES_COUNT: ${ROUTES_COUNT:-4}
+      TIMER_DURATION: ${TIMER_DURATION:-240}
+      TIMER_PAUSE_DURATION: ${TIMER_PAUSE_DURATION:-0}
+      TIMER_LOOP: ${TIMER_LOOP:-false}
+      POLLING_INTERVAL: ${POLLING_INTERVAL:-30}
+      DB_CONNECTION: mysql
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_USER: ${DB_USER:-climbresults}
+      DB_PASSWORD: ${DB_PASSWORD:-climbresults}
+      DB_DATABASE: ${DB_DATABASE:-climbresults}
+      DRIVE_DISK: images
+    ports:
+      - '${PORT:-8080}:8080'
+    volumes:
+      - storage_images:/app/storage/images
+      - app_logs:/app/tmp/logs
+    command: sh -c "node ace migration:run --force ; node ./bin/server.js"
+    restart: unless-stopped
+
+  db:
+    image: mysql:8.4
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE:-climbresults}
+      MYSQL_USER: ${DB_USER:-climbresults}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-climbresults}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-root}
+    ports:
+      - '${DB_PORT_FORWARD:-3306}:3306'
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - mysqladmin ping -h 127.0.0.1 -uroot -p$$MYSQL_ROOT_PASSWORD
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+    restart: unless-stopped
+
+volumes:
+  mysql_data:
+  storage_images:
+  app_logs:
