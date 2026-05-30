@@ -57,7 +57,7 @@ export type CGLayers = {
     shown: boolean
     data: {
       results: ClimberRow[]
-      background: string | null
+      background: string
     } | null
   }
 }

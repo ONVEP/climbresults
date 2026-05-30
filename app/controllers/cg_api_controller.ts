@@ -95,10 +95,7 @@ export default class ApiController {
         current: false,
       })),
     }))
-    logger.debug(
-      `Setting results for category ${request.param('categoryId')} with background ${JSON.stringify(request.body())}`,
-      climberData
-    )
+    logger.debug({ climberData }, `Setting results for category ${request.param('categoryId')}`)
     CGStatus.showLayer('RANKING', { results: climberData, background: category.bgImageUrl })
   }
 
@@ -107,6 +104,11 @@ export default class ApiController {
   }
 
   async setLateral({ request, logger }: HttpContext) {
+    const category = await Category.find(request.param('categoryId'))
+    if (!category) {
+      logger.warn(`Category ${request.param('categoryId')} not found`)
+      return
+    }
     const climbers = await CategoryClimber.query()
       .where('category_id', request.param('categoryId'))
       .orderBy('place', 'asc')
@@ -132,13 +134,10 @@ export default class ApiController {
         current: false,
       })),
     }))
-    logger.debug(
-      `Setting results for category ${request.param('categoryId')} with background ${JSON.stringify(request.body())}`,
-      climberData
-    )
+    logger.debug(`Setting results for category ${request.param('categoryId')}`, climberData)
     CGStatus.showLayer('LATERAL_RANKING', {
       results: climberData,
-      background: request.body().background,
+      background: category.bgImageUrl ?? '',
     })
   }
 
