@@ -1,11 +1,11 @@
 @import 'tailwindcss';
 
 @theme {
-  --color-cg-background: #02273f;
-  --color-cg-accent: #f2cc85;
-  --color-cg-light-blue: #0383bb;
-  --color-cg-neutral-dark: #5a7184;
-  --color-cg-neutral-darker: #284462;
+  --color-cg-background: #091a53;
+  --color-cg-accent: #e36e53;
+  --color-cg-light-blue: #7574b8;
+  --color-cg-neutral-dark: #59527c;
+  --color-cg-neutral-darker: #091a53;
 
   --font-bebas: Bebas Kai;
 }
