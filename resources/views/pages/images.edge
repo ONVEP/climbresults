@@ -1,0 +1,33 @@
+@component("layouts/app", { title: "Images" })
+<main class="p-4 flex flex-col gap-4">
+  <form method="post" action="/images" enctype="multipart/form-data" class="flex flex-wrap items-end gap-2">
+    <label class="flex flex-col gap-1">
+      <span class="text-sm text-gray-300">Nouvelles images</span>
+      <input type="file" name="images" accept="image/*" multiple class="file-input file-input-bordered w-full max-w-xs"
+        required />
+    </label>
+    <button type="submit" class="btn btn-primary">Uploader</button>
+    @if(flashMessages.has('errors.images'))
+    <p class="text-sm text-red-400">{{ flashMessages.get('errors.images') }}</p>
+    @end
+  </form>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+    @each(file in files)
+    <article class="bg-base-200 rounded-md overflow-hidden border border-base-300">
+      <img src="{{ file.url }}" alt="{{ file.name }}" class="w-full aspect-video object-cover bg-base-300"
+        loading="lazy" />
+      <div class="p-3 flex flex-col gap-1">
+        <p class="text-sm font-semibold break-all">{{ file.name }}</p>
+        <a href="{{ file.url }}" target="_blank" rel="noopener noreferrer"
+          class="text-xs text-blue-300 underline break-all">
+          {{ file.url }}
+        </a>
+      </div>
+    </article>
+    @else
+    <p class="text-gray-400">Aucune image sur le stockage.</p>
+    @end
+  </div>
+</main>
+@end

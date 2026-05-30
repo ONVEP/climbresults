@@ -65,6 +65,9 @@ router
       return view.render('pages/timer')
     })
 
+    router.get('/images', [controllers.Images, 'index'])
+    router.post('/images', [controllers.Images, 'upload'])
+
     router.get('/configuration', [controllers.Config, 'index'])
   })
   .use(middleware.applinks())

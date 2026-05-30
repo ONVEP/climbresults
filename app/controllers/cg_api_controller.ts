@@ -1,3 +1,4 @@
+import Category from '#models/category'
 import CategoryClimber from '#models/category_climber'
 import { CGStatus } from '#providers/cg_provider'
 import type { HttpContext } from '@adonisjs/core/http'
@@ -64,6 +65,11 @@ export default class ApiController {
   }
 
   async setResults({ request, logger }: HttpContext) {
+    const category = await Category.find(request.param('categoryId'))
+    if (!category) {
+      logger.warn(`Category ${request.param('categoryId')} not found`)
+      return
+    }
     const climbers = await CategoryClimber.query()
       .where('category_id', request.param('categoryId'))
       .orderBy('place', 'asc')
@@ -93,7 +99,7 @@ export default class ApiController {
       `Setting results for category ${request.param('categoryId')} with background ${JSON.stringify(request.body())}`,
       climberData
     )
-    CGStatus.showLayer('RANKING', { results: climberData, background: request.body().background })
+    CGStatus.showLayer('RANKING', { results: climberData, background: category.bgImageUrl })
   }
 
   async hideResults() {

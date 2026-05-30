@@ -12,7 +12,12 @@ export default class extends BaseSchema {
 
       table.integer('group').notNullable()
       table.integer('route_idx').notNullable()
-      table.integer('climber_id').notNullable().references('climber.id').onDelete('CASCADE')
+      table
+        .integer('climber_id')
+        .unsigned()
+        .notNullable()
+        .references('climbers.id')
+        .onDelete('CASCADE')
     })
   }
 

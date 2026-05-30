@@ -12,6 +12,7 @@ export default class extends BaseSchema {
 
       table.string('name')
       table.integer('ifsc_category_round_id').unsigned().nullable()
+      table.string('bg_image_url').nullable()
     })
   }
 

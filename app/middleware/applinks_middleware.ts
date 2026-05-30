@@ -31,6 +31,12 @@ const appLinks: AppLink[] = [
     active: (ctx) => ctx.request.url().startsWith('/categories'),
   },
   {
+    label: 'Images',
+    url: '/images',
+    icon: 'lucide:image',
+    active: (ctx) => ctx.request.url().startsWith('/images'),
+  },
+  {
     label: 'Configuration',
     url: '/configuration',
     icon: 'lucide:settings-2',

@@ -11,6 +11,7 @@ export const controllers = {
   Cg: () => import('#controllers/cg_controller'),
   Climbers: () => import('#controllers/climbers_controller'),
   Config: () => import('#controllers/config_controller'),
+  Images: () => import('#controllers/images_controller'),
   Live: () => import('#controllers/live_controller'),
   Logs: () => import('#controllers/logs_controller'),
   Timer: () => import('#controllers/timer_controller'),

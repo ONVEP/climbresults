@@ -24,6 +24,9 @@ export default class Category extends BaseModel {
   @column()
   declare ifscCategoryRoundId: number
 
+  @column()
+  declare bgImageUrl: string | null
+
   private _ifscScrapper: IFSC | null = null
   get ifscScrapper() {
     if (!this.ifscCategoryRoundId) return null

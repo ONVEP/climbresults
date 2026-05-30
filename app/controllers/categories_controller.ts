@@ -3,25 +3,34 @@ import { scrapperProvider } from '#providers/scrapper_provider'
 import { getIfscCategoryRoundResults } from '#scrappers/ifsc'
 import type { HttpContext } from '@adonisjs/core/http'
 import logger from '@adonisjs/core/services/logger'
+import drive from '@adonisjs/drive/services/main'
 
 export default class CategoriesController {
   async index({ view }: HttpContext) {
     const categories = await Category.all()
 
-    return view.render('pages/categories', { categories })
+    const disk = drive.use('images')
+    const { objects } = await disk.listAll('', { recursive: true })
+    const bgImages = [...objects].filter((object) => object.isFile).map((object) => object.name)
+
+    return view.render('pages/categories', { categories, bgImages })
   }
 
   async create({ request, response }: HttpContext) {
-    const { name, ifsc } = request.all()
-    if (name === null && ifsc === null) return response.redirect().toPath('/categories')
+    const { name, ifsc, bgImageUrl } = request.all()
+    if (name === null && ifsc === null) {
+      logger.warn('No name or IFSC category round ID provided for category creation')
+      return response.redirect().toPath('/categories')
+    }
 
-    if (ifsc === null) await Category.create({ name })
+    if (ifsc === null) await Category.create({ name, bgImageUrl })
     if (name === null)
       try {
         const data = await getIfscCategoryRoundResults(ifsc)
         const cat = await Category.create({
           name: `${data.round} ${data.category} (${data.event})`,
           ifscCategoryRoundId: ifsc,
+          bgImageUrl,
         })
         cat.scrapIFSC()
       } catch (err) {

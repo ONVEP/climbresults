@@ -41,6 +41,7 @@ export default defineConfig({
     () => import('#providers/config_provider'),
     () => import('#providers/cg_provider'),
     () => import('#providers/icon_provider'),
+    () => import('@adonisjs/drive/drive_provider'),
   ],
 
   /*

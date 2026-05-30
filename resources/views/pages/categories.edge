@@ -1,8 +1,14 @@
 @component("layouts/app", { title: "Catégories" })
 <main class="flex flex-col gap-2">
   <form method="post" class="flex gap-2 mb-2">
-    <input type="text" name="name" placeholder="Nom de la catégorie" class="text-gray-200 px-2 py-1 rounded-sm" />
-    <input type="text" name="ifsc" placeholder="Identifiant IFSC" class="text-gray-200 px-2 py-1 rounded-sm" />
+    <input type="text" name="name" placeholder="Nom de la catégorie" class="dark:text-gray-200 px-2 py-1 rounded-sm" />
+    <input type="text" name="ifsc" placeholder="Identifiant IFSC" class="dark:text-gray-200 px-2 py-1 rounded-sm" />
+    <select name="bgImageUrl" class="dark:text-gray-200 px-2 py-1 rounded-sm">
+      <option value="" disabled selected>Image de fond</option>
+      @each(image in bgImages)
+      <option value="/resources/cg/images/{{ image }}">{{ image }}</option>
+      @end
+    </select>
     <button class="bg-blue-600 text-white px-4 py-2 rounded-sm">Ajouter</button>
   </form>
   <table class="min-w-full divide-y divide-gray-200">
@@ -11,6 +17,7 @@
         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
           Nom de la catégorie
         </th>
+        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider"></th>
         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
           IFSC
         </th>
@@ -27,6 +34,13 @@
       <tr>
         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-white">
           {{ category.name }}
+        </td>
+        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+          @if(category.bgImageUrl)
+          <img src="{{ category.bgImageUrl }}" alt="Background image" class="h-12 object-cover rounded-sm" />
+          @else
+          <span class="text-gray-500">Aucune</span>
+          @end
         </td>
         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-white">
           {{ category.ifscCategoryRoundId }}

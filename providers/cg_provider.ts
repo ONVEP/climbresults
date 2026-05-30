@@ -1,7 +1,7 @@
-import CategoryClimber from '#models/category_climber'
-import Climber from '#models/climber'
+import type CategoryClimber from '#models/category_climber'
+import type Climber from '#models/climber'
 import logger from '@adonisjs/core/services/logger'
-import { ApplicationService } from '@adonisjs/core/types'
+import type { ApplicationService } from '@adonisjs/core/types'
 import transmit from '@adonisjs/transmit/services/main'
 
 export type CGLayer = {
@@ -39,14 +39,14 @@ export type CGLayers = {
     shown: boolean
     data: {
       results: ClimberRow[]
-      background: string
+      background: string | null
     } | null
   }
   LATERAL_RANKING: {
     shown: boolean
     data: {
       results: ClimberRow[]
-      background: string
+      background: string | null
     } | null
   }
 }

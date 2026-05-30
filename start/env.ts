@@ -25,10 +25,24 @@ export default await Env.create(new URL('../', import.meta.url), {
 
   POLLING_INTERVAL: Env.schema.number.optional(),
 
+  DB_CONNECTION: Env.schema.enum(['sqlite', 'mysql'] as const),
+  DB_HOST: Env.schema.string.optional({ format: 'host' }),
+  DB_PORT: Env.schema.number.optional(),
+  DB_USER: Env.schema.string.optional(),
+  DB_PASSWORD: Env.schema.string.optional(),
+  DB_DATABASE: Env.schema.string.optional(),
+
   /*
   |----------------------------------------------------------
   | Variables for configuring session package
   |----------------------------------------------------------
   */
   SESSION_DRIVER: Env.schema.enum(['cookie', 'memory'] as const),
+
+  /*
+  |----------------------------------------------------------
+  | Variables for configuring the drive package
+  |----------------------------------------------------------
+  */
+  DRIVE_DISK: Env.schema.enum(['images'] as const),
 })
