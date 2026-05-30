@@ -4,18 +4,38 @@
 @end
 <main class="flex flex-col gap-2 p-2">
   <div class="flex flex-row items-center gap-2">
-    <select id="current-category" class="bg-gray-700 text-white px-2 py-1 mr-2 rounded-sm w-48">
-      <option value="" disabled {{ currentCategory==null || currentCategory==undefined ? 'selected' : '' }}>
-        Catégorie
-      </option>
-      @each(cat in categories)
-      <option value="{{ cat.category.id }}" {{ cat.category.id==currentCategory ? 'selected' : '' }}>
-        {{ cat.category.name }}
-      </option>
-      @end
-    </select>
-    <button class="bg-green-700 text-white px-2 py-1 rounded-sm" id="show-results">Classement ON</button>
-    <button class="bg-red-700 text-white px-2 py-1 rounded-sm mr-2" id="hide-results">Classement OFF</button>
+    <div class="flex flex-col items-center gap-2">
+      <div class="flex flex-row items-center gap-2">
+        <select id="current-category0" data-slot="0" class="bg-gray-700 text-white px-2 py-1 mr-2 rounded-sm w-48">
+          <option value="" disabled {{ currentCategories.get("0")==null || currentCategories.get("0")==undefined
+            ? 'selected' : '' }}>
+            Catégorie
+          </option>
+          @each(cat in categories)
+          <option value="{{ cat.category.id }}" {{ cat.category.id==currentCategories.get("0") ? 'selected' : '' }}>
+            {{ cat.category.name }}
+          </option>
+          @end
+        </select>
+        <button class="bg-green-700 text-white px-2 py-1 rounded-sm" id="show-results0">Classement ON</button>
+        <button class="bg-red-700 text-white px-2 py-1 rounded-sm mr-2" id="hide-results0">Classement OFF</button>
+      </div>
+      <div class="flex flex-row items-center gap-2">
+        <select id="current-category1" data-slot="1" class="bg-gray-700 text-white px-2 py-1 mr-2 rounded-sm w-48">
+          <option value="" disabled {{ currentCategories.get("1")==null || currentCategories.get("1")==undefined
+            ? 'selected' : '' }}>
+            Catégorie
+          </option>
+          @each(cat in categories)
+            <option value="{{ cat.category.id }}" {{ cat.category.id==currentCategories.get("1") ? 'selected' : '' }}>
+              {{ cat.category.name }}
+            </option>
+            @end
+            </select>
+          <button class="bg-green-700 text-white px-2 py-1 rounded-sm" id="show-results1">Classement ON</button>
+          <button class="bg-red-700 text-white px-2 py-1 rounded-sm mr-2" id="hide-results1">Classement OFF</button>
+          </div>
+          </div>
     <button class="bg-green-700 text-white px-2 py-1 rounded-sm" id="show-lateral">Latéral ON</button>
     <button class="bg-red-700 text-white px-2 py-1 rounded-sm mr-2" id="hide-lateral">Latéral OFF</button>
 
@@ -62,15 +82,15 @@
             <button class="clear-right bg-gray-600 text-white px-2 py-1 rounded-sm">!D</button>
           </th>
         </tr>
-        </thead>
-        <tbody class="bg-gray-800 divide-y divide-gray-700">
-          @each(catclimber in cat.category.climbers)
-          <tr data-order="{{ catclimber.order }}" data-climber-row>
-            <td class="px-4 py-2 whitespace-nowrap text-sm text-white">
-              {{ catclimber.order }}
-            </td>
-            <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-300">
-              @if(catclimber.climber.flagUrl)
+      </thead>
+      <tbody class="bg-gray-800 divide-y divide-gray-700">
+        @each(catclimber in cat.category.climbers)
+        <tr data-order="{{ catclimber.order }}" data-climber-row>
+          <td class="px-4 py-2 whitespace-nowrap text-sm text-white">
+            {{ catclimber.order }}
+          </td>
+          <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-300">
+            @if(catclimber.climber.flagUrl)
             <img src="{{ catclimber.climber.flagUrl }}" alt="{{ catclimber.climber.nationality }}" class="h-4 inline-block ml-2" />
             @end
             {{ catclimber.climber.tag ?? '' }}
@@ -126,8 +146,8 @@
                 </svg>
               </button>
             </form>
-            </td>
-            <td>
+          </td>
+          <td>
             <button type="submit" class="bg-gray-600 text-white px-2 py-1 rounded-sm" data-send-left="{{ catclimber.id }}">
               G
             </button>
@@ -137,11 +157,11 @@
               D
             </button>
           </td>
-          </tr>
-          @end
-          </tbody>
-          </table>
-          </details>
-          @end
-          </main>
+        </tr>
+        @end
+        </tbody>
+        </table>
+        </details>
+        @end
+        </main>
 @end

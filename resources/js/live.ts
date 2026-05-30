@@ -123,48 +123,72 @@ document.addEventListener('DOMContentLoaded', () => {
     })
   }
 
-  const currentCategory = document.getElementById('current-category') as HTMLInputElement | null
+  const currentCategories: Map<number, string> = new Map()
+  const currentCategory = document.querySelectorAll(
+    '#current-category0,#current-category1'
+  ) as NodeListOf<HTMLSelectElement>
   if (currentCategory) {
-    currentCategory.addEventListener('change', (event) => {
-      fetch('/api/current-category', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ category: (event.target as HTMLInputElement).value }),
+    currentCategory.forEach((select) => {
+      const slot = Number(select.getAttribute('data-slot') ?? '0')
+      if (select.value) currentCategories.set(slot, select.value)
+
+      select.addEventListener('change', (event) => {
+        const slot = (event.target as HTMLSelectElement).getAttribute('data-slot') ?? '0'
+        fetch(`/api/current-category/${slot}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ category: (event.target as HTMLSelectElement).value }),
+        }).then(() => {
+          currentCategories.set(Number(slot), (event.target as HTMLSelectElement).value)
+        })
       })
     })
   }
 
-  const resultBackground = document.getElementById('result-background') as HTMLInputElement
-  const showResults = document.getElementById('show-results')
-  const hideResults = document.getElementById('hide-results')
-  console.log(resultBackground, showResults, hideResults)
-  if (resultBackground && showResults && hideResults) {
-    showResults.addEventListener('click', () => {
-      fetch(`/api/cg/results/${currentCategory?.value}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ background: resultBackground.value }),
-      })
-    })
-    hideResults.addEventListener('click', () => {
-      fetch(`/api/cg/results/hide`, { method: 'POST' })
-    })
+  const getSelectedCategoryForSlot = (slot: number) => {
+    const selectedFromMap = currentCategories.get(slot)
+    if (selectedFromMap) return selectedFromMap
+
+    const select = document.getElementById(`current-category${slot}`) as HTMLSelectElement | null
+    return select?.value || null
   }
+
+  ;[0, 1].forEach((slot) => {
+    const showResults = document.getElementById(`show-results${slot}`)
+    const hideResults = document.getElementById(`hide-results${slot}`)
+
+    if (showResults) {
+      showResults.addEventListener('click', () => {
+        const categoryId = getSelectedCategoryForSlot(slot)
+        if (!categoryId) return
+
+        fetch(`/api/cg/results/${categoryId}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+      })
+    }
+
+    if (hideResults) {
+      hideResults.addEventListener('click', () => {
+        fetch(`/api/cg/results/hide`, { method: 'POST' })
+      })
+    }
+  })
 
   const showLateral = document.getElementById('show-lateral')
   const hideLateral = document.getElementById('hide-lateral')
   if (showLateral && hideLateral) {
     showLateral.addEventListener('click', () => {
-      fetch(`/api/cg/lateral/${currentCategory?.value}`, {
+      fetch(`/api/cg/lateral/${currentCategories.get(0)}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ background: resultBackground.value }),
       })
     })
     hideLateral.addEventListener('click', () => {

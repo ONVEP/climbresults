@@ -1,14 +1,22 @@
-import Category from '#models/category'
+import type Category from '#models/category'
+import logger from '@adonisjs/core/services/logger'
 
 class LiveProvider {
-  private _currentCategory: Category['id'] | null = null
+  private _currentCategories: Map<number, Category['id'] | null> = new Map()
   constructor() {}
 
-  get currentCategory() {
-    return this._currentCategory
+  getCurrentCategory(slot: number) {
+    return this._currentCategories.get(slot) || null
   }
-  set currentCategory(category: Category['id'] | null) {
-    this._currentCategory = category
+  setCurrentCategory(slot: number, category: Category['id'] | null) {
+    this._currentCategories.set(slot, category)
+    logger.debug(
+      { slot, category, currentCategories: Array.from(this._currentCategories.entries()) },
+      `Current category for slot ${slot} set to ${category}`
+    )
+  }
+  getCurrentCategories() {
+    return this._currentCategories
   }
 }
 

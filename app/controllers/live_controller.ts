@@ -28,7 +28,7 @@ export default class LiveController {
     return view.render('pages/live', {
       categories: data,
       timer: timeToString(timer.time),
-      currentCategory: LiveStatus.currentCategory,
+      currentCategories: LiveStatus.getCurrentCategories(),
     })
   }
 }

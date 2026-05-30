@@ -77,9 +77,9 @@ router.get('/logs', [LogsController, 'index'])
 router.post('/logs/clear', [LogsController, 'clear'])
 router.get('/logs/content', [LogsController, 'content'])
 
-router.get('/api/current-category', [ApiController, 'getCurrentCategory'])
-router.post('/api/current-category', [ApiController, 'setCurrentCategory'])
-router.get('/api/group/:group', [ApiController, 'clibmersByGroup'])
+router.get('/api/current-category/:slot', [ApiController, 'getCurrentCategory'])
+router.post('/api/current-category/:slot', [ApiController, 'setCurrentCategory'])
+router.get('/api/group/:group/:slot', [ApiController, 'clibmersByGroup'])
 
 router.post('/api/cg/timer/show', [CgApiController, 'showTimer'])
 router.post('/api/cg/timer/hide', [CgApiController, 'hideTimer'])

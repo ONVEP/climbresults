@@ -5,12 +5,16 @@ import db from '@adonisjs/lucid/services/db'
 export default class ApiController {
   async clibmersByGroup({ request, response, logger }: HttpContext) {
     const group = Number(request.param('group'))
+    const slot = Number(request.param('slot'))
     logger.debug(
       { raw: request.param('group'), group },
       `Request group ${group} (${request.param('group')})`
     )
     if (group === undefined || group === null || Number.isNaN(group)) {
       return response.status(400).json({ error: 'Group is required' })
+    }
+    if (slot === undefined || slot === null || Number.isNaN(slot)) {
+      return response.status(400).json({ error: 'Slot is required' })
     }
 
     const climbers = await db
@@ -31,16 +35,17 @@ export default class ApiController {
       )
       .join('climbers', 'climbers.id', 'category_climbers.climber_id')
       .where('climber_route_results.order', group)
-      .if(LiveStatus.currentCategory !== null, (q) =>
-        q.andWhere('category_climbers.category_id', LiveStatus.currentCategory!)
+      .if(LiveStatus.getCurrentCategory(slot) !== null, (q) =>
+        q.andWhere('category_climbers.category_id', LiveStatus.getCurrentCategory(slot)!)
       )
 
     return response.json(climbers)
   }
 
-  async getCurrentCategory({ response }: HttpContext) {
+  async getCurrentCategory({ request, response }: HttpContext) {
+    const slot = request.param('slot')
     return response.json({
-      category: LiveStatus.currentCategory,
+      category: LiveStatus.getCurrentCategory(slot),
     })
   }
 
@@ -50,7 +55,7 @@ export default class ApiController {
       return response.status(400).json({ error: 'Category ID is required' })
     }
 
-    LiveStatus.currentCategory = categoryId
+    LiveStatus.setCurrentCategory(request.param('slot'), categoryId)
     return response.json({ message: 'Current category set successfully' })
   }
 }

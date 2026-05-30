@@ -33,9 +33,9 @@ export type ScannedRoutes = {
     'logs.index': { paramsTuple?: []; params?: {} }
     'logs.clear': { paramsTuple?: []; params?: {} }
     'logs.content': { paramsTuple?: []; params?: {} }
-    'api.get_current_category': { paramsTuple?: []; params?: {} }
-    'api.set_current_category': { paramsTuple?: []; params?: {} }
-    'api.clibmers_by_group': { paramsTuple: [ParamValue]; params: {'group': ParamValue} }
+    'api.get_current_category': { paramsTuple: [ParamValue]; params: {'slot': ParamValue} }
+    'api.set_current_category': { paramsTuple: [ParamValue]; params: {'slot': ParamValue} }
+    'api.clibmers_by_group': { paramsTuple: [ParamValue,ParamValue]; params: {'group': ParamValue,'slot': ParamValue} }
     'cg_api.show_timer': { paramsTuple?: []; params?: {} }
     'cg_api.hide_timer': { paramsTuple?: []; params?: {} }
     'cg_api.hide_left_climber': { paramsTuple?: []; params?: {} }
@@ -61,8 +61,8 @@ export type ScannedRoutes = {
     'config.index': { paramsTuple?: []; params?: {} }
     'logs.index': { paramsTuple?: []; params?: {} }
     'logs.content': { paramsTuple?: []; params?: {} }
-    'api.get_current_category': { paramsTuple?: []; params?: {} }
-    'api.clibmers_by_group': { paramsTuple: [ParamValue]; params: {'group': ParamValue} }
+    'api.get_current_category': { paramsTuple: [ParamValue]; params: {'slot': ParamValue} }
+    'api.clibmers_by_group': { paramsTuple: [ParamValue,ParamValue]; params: {'group': ParamValue,'slot': ParamValue} }
     'config.get_config': { paramsTuple?: []; params?: {} }
   }
   HEAD: {
@@ -76,8 +76,8 @@ export type ScannedRoutes = {
     'config.index': { paramsTuple?: []; params?: {} }
     'logs.index': { paramsTuple?: []; params?: {} }
     'logs.content': { paramsTuple?: []; params?: {} }
-    'api.get_current_category': { paramsTuple?: []; params?: {} }
-    'api.clibmers_by_group': { paramsTuple: [ParamValue]; params: {'group': ParamValue} }
+    'api.get_current_category': { paramsTuple: [ParamValue]; params: {'slot': ParamValue} }
+    'api.clibmers_by_group': { paramsTuple: [ParamValue,ParamValue]; params: {'group': ParamValue,'slot': ParamValue} }
     'config.get_config': { paramsTuple?: []; params?: {} }
   }
   POST: {
@@ -94,7 +94,7 @@ export type ScannedRoutes = {
     'timer.adjust': { paramsTuple?: []; params?: {} }
     'images.upload': { paramsTuple?: []; params?: {} }
     'logs.clear': { paramsTuple?: []; params?: {} }
-    'api.set_current_category': { paramsTuple?: []; params?: {} }
+    'api.set_current_category': { paramsTuple: [ParamValue]; params: {'slot': ParamValue} }
     'cg_api.show_timer': { paramsTuple?: []; params?: {} }
     'cg_api.hide_timer': { paramsTuple?: []; params?: {} }
     'cg_api.hide_left_climber': { paramsTuple?: []; params?: {} }
