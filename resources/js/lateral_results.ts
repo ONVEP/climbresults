@@ -3,10 +3,10 @@ import { Transmit } from '@adonisjs/transmit-client'
 
 const nbClimbers = 24
 
-const updateRow = (result: ClimberRow | null, idx: number) => {
+const updateRow = (slot: number, result: ClimberRow | null, idx: number) => {
   const row = document
     .querySelector('[data-cglayer="LATERAL_RANKING"]')
-    ?.querySelectorAll(`[data-cg-row]`)[idx]
+    ?.querySelectorAll(`[data-cg-row][data-slot="${slot}"]`)[idx]
   if (!row) return
   if (!result) {
     row?.classList.add('opacity-0', 'border-none')
@@ -57,20 +57,21 @@ const updateRow = (result: ClimberRow | null, idx: number) => {
 
 let timeout: NodeJS.Timeout | null = null
 
-const nextPage = (results: CGLayers['LATERAL_RANKING']['data'], page = 0) => {
+const nextPage = (slot: number, results: CGLayers['LATERAL_RANKING']['data'], page = 0) => {
   console.log('results', results)
   if (!results) return
+
   const rows: (ClimberRow | null)[] =
-    results?.results.slice(page * nbClimbers, (page + 1) * nbClimbers) ?? []
+    results[slot]?.results.slice(page * nbClimbers, (page + 1) * nbClimbers) ?? []
   while (rows.length < nbClimbers) rows.push(null)
-  rows?.forEach((result, idx) => updateRow(result, idx))
+  rows?.forEach((result, idx) => updateRow(slot, result, idx))
   if (timeout) clearTimeout(timeout)
 
-  const titles = document.querySelectorAll(`[data-cgtitle]`)
+  const titles = document.querySelectorAll(`[data-cgtitle][data-slot="${slot}"]`)
   titles.forEach((title) => {
     const titleName = title.getAttribute('data-cgtitle')
     if (!titleName) return
-    if (results.background.includes(titleName)) {
+    if (results[slot]?.background.includes(titleName)) {
       title.classList.add('flex')
       title.classList.remove('hidden')
     } else {
@@ -95,8 +96,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.log('Received data for layer:', 'LATERAL_RANKING', data)
     if (timeout) clearTimeout(timeout)
     console.log('data.data', data.data)
+    console.log('data.shown', data.shown)
     if (data.data && data.shown) {
-      nextPage(data.data)
+      console.log('Setting data for layer LATERAL_RANKING', data.data)
+      for (let slot = 0; slot < Object.keys(data.data).length; slot++) {
+        console.log('Updating slot', slot)
+        nextPage(slot, data.data)
+      }
     }
   })
 })

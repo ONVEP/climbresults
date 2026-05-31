@@ -55,10 +55,12 @@ export type CGLayers = {
   }
   LATERAL_RANKING: {
     shown: boolean
-    data: {
-      results: ClimberRow[]
-      background: string
-    } | null
+    data:
+      | {
+          results: ClimberRow[]
+          background: string
+        }[]
+      | null
   }
 }
 
