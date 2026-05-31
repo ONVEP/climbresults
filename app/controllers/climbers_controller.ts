@@ -27,6 +27,20 @@ export default class ClimbersController {
     return response.redirect().toPath('/climbers')
   }
 
+  async update({ params, request, response }: HttpContext) {
+    const { id } = params
+    const { firstName, lastName, nationality } = request.all()
+
+    const climber = await Climber.findOrFail(id)
+    climber.firstName = firstName
+    climber.lastName = lastName
+    climber.nationality = nationality
+    climber.flagUrl = `https://d1n1qj9geboqnb.cloudfront.net/flags/${nationality}.png`
+    await climber.save()
+
+    return response.redirect().toPath('/climbers')
+  }
+
   async delete({ params, response }: HttpContext) {
     const { id } = params
 

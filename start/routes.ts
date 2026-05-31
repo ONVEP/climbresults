@@ -32,6 +32,7 @@ router
     router.get('/live', [LiveController])
     router.get('/climbers', [ClimbersController, 'index'])
     router.post('/climbers', [ClimbersController, 'create'])
+    router.patch('/climbers/:id', [ClimbersController, 'update'])
     router.delete('/climbers/:id', [ClimbersController, 'delete'])
     router.patch('/climbers/:id/category', [ClimbersController, 'setCategory'])
     router.get('/categories', [CategoriesController, 'index'])

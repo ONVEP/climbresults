@@ -11,6 +11,7 @@ export type ScannedRoutes = {
     'live': { paramsTuple?: []; params?: {} }
     'climbers.index': { paramsTuple?: []; params?: {} }
     'climbers.create': { paramsTuple?: []; params?: {} }
+    'climbers.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'climbers.delete': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'climbers.set_category': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'categories.index': { paramsTuple?: []; params?: {} }
@@ -108,15 +109,16 @@ export type ScannedRoutes = {
     'config.update_config': { paramsTuple?: []; params?: {} }
     'cg.data': { paramsTuple?: []; params?: {} }
   }
+  PATCH: {
+    'climbers.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'climbers.set_category': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'category_climbers.set_place': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'category_climbers.results': { paramsTuple: [ParamValue,ParamValue]; params: {'id': ParamValue,'route': ParamValue} }
+  }
   DELETE: {
     'climbers.delete': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'categories.delete': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'category_climbers.delete': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
-  }
-  PATCH: {
-    'climbers.set_category': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
-    'category_climbers.set_place': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
-    'category_climbers.results': { paramsTuple: [ParamValue,ParamValue]; params: {'id': ParamValue,'route': ParamValue} }
   }
 }
 declare module '@adonisjs/core/types/http' {

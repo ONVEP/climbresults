@@ -30,13 +30,16 @@
           @each(climber in climbers)
           <tr>
             <td class="px-4 py-2 whitespace-nowrap text-sm text-white">
-              {{ climber.firstName }}
+              <input type="text" name="firstName" value="{{ climber.firstName }}" form="edit-climber-{{ climber.id }}"
+                class="bg-gray-700 text-white px-2 py-1 rounded-sm w-32" />
             </td>
             <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-300">
-              {{ climber.lastName }}
+              <input type="text" name="lastName" value="{{ climber.lastName }}" form="edit-climber-{{ climber.id }}"
+                class="bg-gray-700 text-white px-2 py-1 rounded-sm w-40" />
             </td>
             <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-300">
-              {{ climber.nationality }}
+              <input type="text" name="nationality" value="{{ climber.nationality }}" form="edit-climber-{{ climber.id }}"
+                class="bg-gray-700 text-white px-2 py-1 rounded-sm w-28" />
               @if(climber.flagUrl)
               <img src="{{ climber.flagUrl }}" alt="{{ climber.nationality }}" class="h-4 inline-block ml-2" />
               @end
@@ -56,6 +59,9 @@
                 </div>
                 </td>
                 <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-300 flex flex-row gap-1">
+                  <form id="edit-climber-{{ climber.id }}" method="post" action="/climbers/{{ climber.id }}?_method=PATCH">
+                    <button type="submit" class="bg-emerald-800 text-white px-2 py-1 rounded-sm">Modifier</button>
+                  </form>
                   <form method="post" action="/climbers/{{ climber.id }}?_method=DELETE">
             <button type="submit" class="bg-red-800 text-white px-2 py-1 rounded-sm">Supprimer</button>
             </form>
