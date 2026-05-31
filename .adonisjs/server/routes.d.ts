@@ -11,6 +11,7 @@ export type ScannedRoutes = {
     'live': { paramsTuple?: []; params?: {} }
     'climbers.index': { paramsTuple?: []; params?: {} }
     'climbers.create': { paramsTuple?: []; params?: {} }
+    'climbers.import': { paramsTuple?: []; params?: {} }
     'climbers.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'climbers.delete': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'climbers.set_category': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
@@ -86,6 +87,7 @@ export type ScannedRoutes = {
     'subscribe': { paramsTuple?: []; params?: {} }
     'unsubscribe': { paramsTuple?: []; params?: {} }
     'climbers.create': { paramsTuple?: []; params?: {} }
+    'climbers.import': { paramsTuple?: []; params?: {} }
     'categories.create': { paramsTuple?: []; params?: {} }
     'categories.poll': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'categories.start_auto_poll': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }

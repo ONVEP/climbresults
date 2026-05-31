@@ -3,6 +3,7 @@ import CategoryClimber from '#models/category_climber'
 import Climber from '#models/climber'
 import type { HttpContext } from '@adonisjs/core/http'
 import transmit from '@adonisjs/transmit/services/main'
+import { readFile } from 'node:fs/promises'
 
 export default class ClimbersController {
   async index({ view }: HttpContext) {
@@ -23,6 +24,56 @@ export default class ClimbersController {
       nationality,
       flagUrl: `https://d1n1qj9geboqnb.cloudfront.net/flags/${nationality}.png`,
     })
+
+    return response.redirect().toPath('/climbers')
+  }
+
+  async import({ request, response, logger }: HttpContext) {
+    const tsvFile = request.file('tsvFile')
+    if (!tsvFile?.tmpPath) {
+      logger.error('No TSV file provided')
+      return response.redirect().toPath('/climbers')
+    }
+
+    const tsv = await readFile(tsvFile.tmpPath, 'utf8')
+    if (!tsv.trim()) {
+      logger.error('TSV file is empty')
+      return response.redirect().toPath('/climbers')
+    }
+
+    const lines = tsv
+      .split(/\r?\n/)
+      .map((line: string) => line.trim())
+      .filter((line: string) => line.length > 0)
+
+    if (lines.length < 1) {
+      logger.error('TSV file does not contain enough data')
+      return response.redirect().toPath('/climbers')
+    }
+
+    const climbersToCreate = lines
+      .map((line: string) => line.split('\t').map((value: string) => value.trim()))
+      .map((columns: string[]) => {
+        const tag = columns[0] || null
+        const firstName = columns[1] || ''
+        const lastName = columns[2] || ''
+        const nationality = columns[3] || ''
+
+        if (!firstName || !lastName || !nationality) return null
+
+        return {
+          firstName,
+          lastName,
+          nationality,
+          tag,
+          flagUrl: `https://d1n1qj9geboqnb.cloudfront.net/flags/${nationality}.png`,
+        }
+      })
+      .filter((climber) => climber !== null)
+
+    if (climbersToCreate.length > 0) {
+      await Climber.createMany(climbersToCreate)
+    }
 
     return response.redirect().toPath('/climbers')
   }

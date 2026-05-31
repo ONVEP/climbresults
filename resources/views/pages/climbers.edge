@@ -5,7 +5,12 @@
     <input type="text" name="lastName" placeholder="Nom de famille" class="text-gray-200 px-2 py-1 rounded-sm" />
     <input type="text" name="nationality" placeholder="Nationalité" class="text-gray-200 px-2 py-1 rounded-sm" />
     <button class="bg-blue-600 text-white px-4 py-2 rounded-sm">Ajouter un grimpeur</button>
-    </form>
+  </form>
+  <form method="post" action="/climbers/import" enctype="multipart/form-data" class="flex gap-2 mb-4 items-center">
+    <input type="file" name="tsvFile" accept=".tsv,text/tab-separated-values,text/plain"
+      class="text-gray-200 px-2 py-1 rounded-sm bg-gray-700" required />
+    <button type="submit" class="bg-indigo-700 text-white px-4 py-2 rounded-sm">Importer fichier TSV</button>
+  </form>
     <table class="min-w-full divide-y divide-gray-200">
       <thead class="bg-gray-700">
         <tr>
