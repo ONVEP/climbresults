@@ -33,17 +33,24 @@
       @each(category in categories)
       <tr>
         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-white">
-          {{ category.name }}
+          <input type="text" name="name" value="{{ category.name }}" form="edit-category-{{ category.id }}"
+            class="bg-gray-700 text-white px-2 py-1 rounded-sm w-56" />
         </td>
         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-          @if(category.bgImageUrl)
-          <img src="{{ category.bgImageUrl }}" alt="Background image" class="h-12 object-cover rounded-sm" />
-          @else
-          <span class="text-gray-500">Aucune</span>
-          @end
+          <select name="bgImageUrl" form="edit-category-{{ category.id }}"
+            class="bg-gray-700 text-white px-2 py-1 rounded-sm mb-2 max-w-64">
+            <option value="" {{ !category.bgImageUrl ? 'selected' : '' }}>Aucune</option>
+            @each(image in bgImages)
+            <option value="/resources/cg/images/{{ image }}" {{ category.bgImageUrl=='/resources/cg/images/' + image ? 'selected'
+              : '' }}>
+              {{ image }}
+            </option>
+            @end
+          </select>
         </td>
         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-white">
-          {{ category.ifscCategoryRoundId }}
+          <input type="number" name="ifsc" value="{{ category.ifscCategoryRoundId }}" form="edit-category-{{ category.id }}"
+            class="bg-gray-700 text-white px-2 py-1 rounded-sm w-40" />
         </td>
         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium {{ category.pollingStatus.result =='ok' ? 'text-green-500'
                 : category.pollingStatus.result == 'warning' ? 'text-yellow-500'
@@ -52,6 +59,9 @@
         </td>
         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
           <div class="flex flex-row gap-1">
+            <form id="edit-category-{{ category.id }}" method="post" action="/categories/{{ category.id }}?_method=PATCH">
+              <button class="bg-emerald-800 text-white px-2 py-1 rounded-sm">Modifier</button>
+            </form>
             <form method="post" action="/categories/{{ category.id }}?_method=DELETE">
               <button class="bg-red-800 text-white px-2 py-1 rounded-sm">Supprimer</button>
             </form>

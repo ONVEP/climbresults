@@ -16,6 +16,7 @@ export type ScannedRoutes = {
     'climbers.set_category': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'categories.index': { paramsTuple?: []; params?: {} }
     'categories.create': { paramsTuple?: []; params?: {} }
+    'categories.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'categories.delete': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'categories.poll': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'categories.start_auto_poll': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
@@ -112,6 +113,7 @@ export type ScannedRoutes = {
   PATCH: {
     'climbers.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'climbers.set_category': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'categories.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'category_climbers.set_place': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'category_climbers.results': { paramsTuple: [ParamValue,ParamValue]; params: {'id': ParamValue,'route': ParamValue} }
   }

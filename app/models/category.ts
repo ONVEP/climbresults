@@ -22,7 +22,7 @@ export default class Category extends BaseModel {
   declare climbers: HasMany<typeof CategoryClimber>
 
   @column()
-  declare ifscCategoryRoundId: number
+  declare ifscCategoryRoundId: number | null
 
   @column()
   declare bgImageUrl: string | null

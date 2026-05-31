@@ -37,6 +37,7 @@ router
     router.patch('/climbers/:id/category', [ClimbersController, 'setCategory'])
     router.get('/categories', [CategoriesController, 'index'])
     router.post('/categories', [CategoriesController, 'create'])
+    router.patch('/categories/:id', [CategoriesController, 'update'])
     router.delete('/categories/:id', [CategoriesController, 'delete'])
     router.post('/categories/:id/poll', [CategoriesController, 'poll'])
     router.post('/categories/:id/auto_poll_start', [CategoriesController, 'startAutoPoll'])

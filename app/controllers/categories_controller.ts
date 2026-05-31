@@ -40,6 +40,22 @@ export default class CategoriesController {
     return response.redirect().toPath('/categories')
   }
 
+  async update({ params, request, response }: HttpContext) {
+    const { id } = params
+    const { name, ifsc, bgImageUrl } = request.all()
+
+    const category = await Category.findOrFail(id)
+    category.name = name
+
+    const parsedIfsc = Number(ifsc)
+    category.ifscCategoryRoundId = Number.isFinite(parsedIfsc) && ifsc !== '' ? parsedIfsc : null
+    category.bgImageUrl = bgImageUrl || null
+
+    await category.save()
+
+    return response.redirect().toPath('/categories')
+  }
+
   async delete({ params, response }: HttpContext) {
     const { id } = params
 
