@@ -17,13 +17,13 @@ export default class CategoriesController {
   }
 
   async create({ request, response }: HttpContext) {
-    const { name, ifsc, bgImageUrl } = request.all()
+    const { name, ifsc, bgImageUrl, spreadsheetId } = request.all()
     if (name === null && ifsc === null) {
       logger.warn('No name or IFSC category round ID provided for category creation')
       return response.redirect().toPath('/categories')
     }
 
-    if (ifsc === null) await Category.create({ name, bgImageUrl })
+    if (ifsc === null) await Category.create({ name, bgImageUrl, spreadsheetId })
     if (name === null)
       try {
         const data = await getIfscCategoryRoundResults(ifsc)
@@ -31,6 +31,7 @@ export default class CategoriesController {
           name: `${data.round} ${data.category} (${data.event})`,
           ifscCategoryRoundId: ifsc,
           bgImageUrl,
+          spreadsheetId,
         })
         cat.scrapIFSC()
       } catch (err) {
@@ -42,13 +43,15 @@ export default class CategoriesController {
 
   async update({ params, request, response }: HttpContext) {
     const { id } = params
-    const { name, ifsc, bgImageUrl } = request.all()
+    const { name, ifsc, bgImageUrl, spreadsheetId } = request.all()
 
     const category = await Category.findOrFail(id)
     category.name = name
+    category.spreadsheetId = spreadsheetId || null
 
     const parsedIfsc = Number(ifsc)
-    category.ifscCategoryRoundId = Number.isFinite(parsedIfsc) && ifsc !== '' ? parsedIfsc : null
+    category.ifscCategoryRoundId =
+      Number.isFinite(parsedIfsc) && ifsc !== '' && parsedIfsc > 0 ? parsedIfsc : null
     category.bgImageUrl = bgImageUrl || null
 
     await category.save()
@@ -71,7 +74,7 @@ export default class CategoriesController {
     const category = await Category.find(id)
     if (category) {
       try {
-        const status = await category.scrapIFSC()
+        const status = await category.poll()
         scrapperProvider.setPollingStatus(category.id, status)
       } catch (err) {
         logger.error({ err }, 'Error while polling category')

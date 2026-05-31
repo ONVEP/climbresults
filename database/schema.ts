@@ -8,7 +8,7 @@ import { BaseModel, column } from '@adonisjs/lucid/orm'
 import { DateTime } from 'luxon'
 
 export class CategorySchema extends BaseModel {
-  static $columns = ['bgImageUrl', 'createdAt', 'id', 'ifscCategoryRoundId', 'name', 'updatedAt'] as const
+  static $columns = ['bgImageUrl', 'createdAt', 'id', 'ifscCategoryRoundId', 'name', 'spreadsheetId', 'updatedAt'] as const
   $columns = CategorySchema.$columns
   @column()
   declare bgImageUrl: string | null
@@ -20,6 +20,8 @@ export class CategorySchema extends BaseModel {
   declare ifscCategoryRoundId: number | null
   @column()
   declare name: string | null
+  @column()
+  declare spreadsheetId: string | null
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime | null
 }

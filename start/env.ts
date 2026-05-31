@@ -25,6 +25,8 @@ export default await Env.create(new URL('../', import.meta.url), {
 
   POLLING_INTERVAL: Env.schema.number.optional(),
 
+  GOOGLE_API_KEY: Env.schema.string.optional(),
+
   DB_CONNECTION: Env.schema.enum(['sqlite', 'mysql'] as const),
   DB_HOST: Env.schema.string.optional({ format: 'host' }),
   DB_PORT: Env.schema.number.optional(),

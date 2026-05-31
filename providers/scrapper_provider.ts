@@ -50,7 +50,7 @@ class ScrapperProvider {
     for (const category of this.watchList) {
       logger.info(`Polling category ${category.name} (${category.id})`)
       try {
-        this.pollingStatuses[category.id] = await category.scrapIFSC()
+        this.pollingStatuses[category.id] = await category.poll()
       } catch (err) {
         this.pollingStatuses[category.id] = { result: 'error', message: 'ERR_UNKWN_13' }
         logger.error({ err }, 'Error while polling category')

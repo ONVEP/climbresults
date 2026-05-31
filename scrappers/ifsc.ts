@@ -1,4 +1,4 @@
-import Category from '#models/category'
+import type Category from '#models/category'
 import CategoryClimber from '#models/category_climber'
 import Climber from '#models/climber'
 import ClimberRouteResult from '#models/climber_route_result'
