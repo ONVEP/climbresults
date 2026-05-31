@@ -1,6 +1,7 @@
 @component("layouts/app", { title: "Grimpeurs" })
 <main class="py-2">
   <form method="post" class="flex gap-2 mb-4">
+    <input type="text" name="tag" placeholder="Tag" class="text-gray-200 px-2 py-1 rounded-sm" />
     <input type="text" name="firstName" placeholder="Prénom" class="text-gray-200 px-2 py-1 rounded-sm" />
     <input type="text" name="lastName" placeholder="Nom de famille" class="text-gray-200 px-2 py-1 rounded-sm" />
     <input type="text" name="nationality" placeholder="Nationalité" class="text-gray-200 px-2 py-1 rounded-sm" />
@@ -14,6 +15,9 @@
     <table class="min-w-full divide-y divide-gray-200">
       <thead class="bg-gray-700">
         <tr>
+        <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+          Tag
+        </th>
         <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
           Prénom
         </th>
@@ -34,6 +38,10 @@
         <tbody class="bg-gray-800 divide-y divide-gray-700">
           @each(climber in climbers)
           <tr>
+            <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-300">
+              <input type="text" name="tag" value="{{ climber.tag }}" form="edit-climber-{{ climber.id }}"
+                class="bg-gray-700 text-white px-2 py-1 rounded-sm w-24" />
+            </td>
             <td class="px-4 py-2 whitespace-nowrap text-sm text-white">
               <input type="text" name="firstName" value="{{ climber.firstName }}" form="edit-climber-{{ climber.id }}"
                 class="bg-gray-700 text-white px-2 py-1 rounded-sm w-32" />

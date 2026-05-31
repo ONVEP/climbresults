@@ -16,12 +16,13 @@ export default class ClimbersController {
   }
 
   async create({ request, response }: HttpContext) {
-    const { firstName, lastName, nationality } = request.all()
+    const { firstName, lastName, nationality, tag } = request.all()
 
     await Climber.create({
       firstName,
       lastName,
       nationality,
+      tag: tag || null,
       flagUrl: `https://d1n1qj9geboqnb.cloudfront.net/flags/${nationality}.png`,
     })
 
@@ -80,12 +81,13 @@ export default class ClimbersController {
 
   async update({ params, request, response }: HttpContext) {
     const { id } = params
-    const { firstName, lastName, nationality } = request.all()
+    const { firstName, lastName, nationality, tag } = request.all()
 
     const climber = await Climber.findOrFail(id)
     climber.firstName = firstName
     climber.lastName = lastName
     climber.nationality = nationality
+    climber.tag = tag || null
     climber.flagUrl = `https://d1n1qj9geboqnb.cloudfront.net/flags/${nationality}.png`
     await climber.save()
 
