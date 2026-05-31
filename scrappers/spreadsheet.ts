@@ -48,7 +48,7 @@ export default class Spreadsheet {
       try {
         data = await this.sheets.spreadsheets.values.get({
           spreadsheetId,
-          range: 'Results!A4:AP13',
+          range: 'Results!A4:AP14',
         })
       } catch {
         return { result: 'error', message: 'Fetch error' }
@@ -73,8 +73,8 @@ export default class Spreadsheet {
         }
         const attempts: { zone: number; top: number }[] = []
         for (let i = 23; i < 31; i += 2) {
-          const zone = Number.parseInt(row[i]?.toString() || '0')
-          const top = Number.parseInt(row[i + 1]?.toString() || '0')
+          const top = Number.parseInt(row[i]?.toString() || '0')
+          const zone = Number.parseInt(row[i + 1]?.toString() || '0')
           if (Number.isFinite(zone) && Number.isFinite(top)) {
             attempts.push({ zone, top })
           }
@@ -85,6 +85,7 @@ export default class Spreadsheet {
           warnings.push(`Climber with bib ${bib} has invalid score or place value, skipping`)
           continue
         }
+        if (place < 1) continue
         climberData.push({ order: Number.parseInt(idx) + 1, tag: bib, attempts, score, place })
       }
 
